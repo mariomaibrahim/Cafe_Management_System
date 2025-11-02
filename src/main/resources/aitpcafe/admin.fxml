@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aitpcafe.AdminController">
+    <children>
+        <AnchorPane prefHeight="600.0" prefWidth="1100.0">
+            <children>
+                <AnchorPane prefHeight="600.0" prefWidth="200.0" styleClass="nav-form" stylesheets="@admin.css">
+                    <children>
+                        <VBox spacing="5" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0">
+                            <HBox alignment="CENTER" spacing="8">
+                                <FontIcon iconColor="WHITE" iconLiteral="fas-coffee" iconSize="70" wrappingWidth="90.94998931884766" />
+                            </HBox>
+                        </VBox>
+                        
+                        <Button fx:id="dashboard_btn" layoutX="10.0" layoutY="311.0" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" text="Dashboard" textAlignment="CENTER">
+                            <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-chart-line" iconSize="14" /></graphic>
+                        </Button>
+                  <TextFlow layoutX="10.0" layoutY="215.0">
+                     <children>
+                              <Button fx:id="menu_btn" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" text="Menu" textAlignment="CENTER">
+                                  <graphic>
+                              <FontIcon iconColor="WHITE" iconLiteral="fas-utensils" iconSize="14" />
+                           </graphic>
+                              </Button>
+                     </children>
+                  </TextFlow>
+                        <Button fx:id="inventory_btn" layoutX="10.0" layoutY="263.0" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" text="Inventory">
+                            <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-box" iconSize="14" /></graphic>
+                        </Button>
+                        
+                        <Button fx:id="logout_btn" layoutX="10.0" layoutY="541.0" onAction="#logout" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" text="Logout">
+                            <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-sign-out-alt" iconSize="14" /></graphic>
+                        </Button>
+                         
+                            <Label alignment="CENTER" layoutX="10.0" layoutY="127.0" prefHeight="37.0" prefWidth="180" text="Management System" textFill="WHITE">
+                             <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                         </Label>
+                          <Label layoutX="50.0" layoutY="105.0" text="Cafe Admin" textAlignment="CENTER" textFill="WHITE">
+                              <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                          </Label>
+                    </children>
+                </AnchorPane>
+
+                <AnchorPane fx:id="dashboard_form" layoutX="200.0" prefHeight="600.0" prefWidth="900.0" styleClass="white-bg">
+                    <children>
+                        <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <VBox spacing="15" style="-fx-padding: 20;">
+                                <Label styleClass="header-label" text="Dashboard Overview">
+                                    <font><Font name="Arial Bold" size="24.0" /></font>
+                                </Label>
+                                
+                                <GridPane hgap="15" vgap="15">
+                                    <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="stat-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                        <FontIcon iconColor="#3498db" iconLiteral="fas-users" iconSize="32" layoutX="15.0" layoutY="45.0" />
+                                        <Label layoutX="60.0" layoutY="15.0" styleClass="stat-label" text="Total Cashiers">
+                                            <font><Font size="13.0" /></font>
+                                        </Label>
+                                        <Label fx:id="totalCashiers" layoutX="60.0" layoutY="40.0" styleClass="stat-value" text="0">
+                                            <font><Font name="Arial Bold" size="26.0" /></font>
+                                        </Label>
+                                    </AnchorPane>
+                                    
+                                    <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="stat-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                        <FontIcon iconColor="#27ae60" iconLiteral="fas-shopping-cart" iconSize="32" layoutX="15.0" layoutY="45.0" />
+                                        <Label layoutX="60.0" layoutY="15.0" styleClass="stat-label" text="Today Orders">
+                                            <font><Font size="13.0" /></font>
+                                        </Label>
+                                        <Label fx:id="todayOrders" layoutX="60.0" layoutY="40.0" styleClass="stat-value" text="0">
+                                            <font><Font name="Arial Bold" size="26.0" /></font>
+                                        </Label>
+                                    </AnchorPane>
+                                    
+                                    <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="stat-card" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                                        <FontIcon iconColor="#e74c3c" iconLiteral="fas-dollar-sign" iconSize="32" layoutX="15.0" layoutY="45.0" />
+                                        <Label layoutX="60.0" layoutY="15.0" styleClass="stat-label" text="Today Revenue">
+                                            <font><Font size="13.0" /></font>
+                                        </Label>
+                                        <Label fx:id="todayRevenue" layoutX="60.0" layoutY="40.0" styleClass="stat-value" text="0.00 EGP">
+                                            <font><Font name="Arial Bold" size="24.0" /></font>
+                                        </Label>
+                                    </AnchorPane>
+                           <columnConstraints>
+                              <ColumnConstraints />
+                              <ColumnConstraints />
+                              <ColumnConstraints />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints />
+                           </rowConstraints>
+                                </GridPane>
+                                
+                                <HBox spacing="15">
+                                    <Button onAction="#showEmployeeManagement" styleClass="action-btn" text="Manage Employees">
+                                        <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-user-cog" iconSize="13" /></graphic>
+                                    </Button>
+                                    <Button onAction="#showCustomerReports" styleClass="action-btn" text="Customer Reports">
+                                        <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-file-alt" iconSize="13" /></graphic>
+                                    </Button>
+                                    <Button onAction="#editAdminProfile" styleClass="action-btn-edit" text="Edit Profile">
+                                        <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-user-edit" iconSize="13" /></graphic>
+                                    </Button>
+                                </HBox>
+                                
+                                <Label styleClass="section-title" text="Cashier Activity">
+                                    <font><Font name="Arial Bold" size="18.0" /></font>
+                                </Label>
+                                
+                                <TableView fx:id="cashierActivityTable" prefHeight="200.0" styleClass="table-view">
+                                    <columns>
+                                        <TableColumn fx:id="col_cashierName" prefWidth="180.0" text="Cashier Name" />
+                                        <TableColumn fx:id="col_orders" prefWidth="120.0" text="Orders Today" />
+                                        <TableColumn fx:id="col_sales" prefWidth="150.0" text="Sales Today" />
+                                        <TableColumn fx:id="col_customers" prefWidth="120.0" text="Customers" />
+                                        <TableColumn fx:id="col_loginTime" prefWidth="150.0" text="Login Time" />
+                                        <TableColumn fx:id="col_status" prefWidth="100.0" text="Status" />
+                                    </columns>
+                                </TableView>
+                                
+                                <Label styleClass="section-title" text="Employee Management">
+                                    <font><Font name="Arial Bold" size="18.0" /></font>
+                                </Label>
+                                
+                                <VBox fx:id="employeeSection" spacing="12" styleClass="form-card">
+                                    <GridPane hgap="12" vgap="10">
+                                        <VBox spacing="3" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                            <Label styleClass="form-label" text="Username" />
+                                            <TextField fx:id="emp_username" prefWidth="180" promptText="Username" styleClass="text-field" />
+                                        </VBox>
+                                        
+                                        <VBox spacing="3" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                            <Label styleClass="form-label" text="Password" />
+                                            <PasswordField fx:id="emp_password" prefWidth="180" promptText="Password" styleClass="text-field" />
+                                        </VBox>
+                                        
+                                        <VBox spacing="3" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                                            <Label styleClass="form-label" text="Full Name" />
+                                            <TextField fx:id="emp_fullname" prefWidth="180" promptText="Full Name" styleClass="text-field" />
+                                        </VBox>
+                                        
+                                        <VBox spacing="3" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                            <Label styleClass="form-label" text="Phone" />
+                                            <TextField fx:id="emp_phone" prefWidth="180" promptText="Phone" styleClass="text-field" />
+                                        </VBox>
+                                        
+                                        <VBox spacing="3" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <Label styleClass="form-label" text="Email" />
+                                            <TextField fx:id="emp_email" prefWidth="180" promptText="Email" styleClass="text-field" />
+                                        </VBox>
+                                        
+                                        <VBox spacing="3" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                            <Label styleClass="form-label" text="Salary" />
+                                            <TextField fx:id="emp_salary" prefWidth="180" promptText="Salary" styleClass="text-field" />
+                                        </VBox>
+                                        
+                                        <VBox spacing="3" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                            <Label styleClass="form-label" text="Security Question" />
+                                            <ComboBox fx:id="emp_question" prefWidth="180" promptText="Select Question" styleClass="combo-box" />
+                                        </VBox>
+                                        
+                                        <VBox spacing="3" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <Label styleClass="form-label" text="Answer" />
+                                            <TextField fx:id="emp_answer" prefWidth="180" promptText="Answer" styleClass="text-field" />
+                                        </VBox>
+                              <columnConstraints>
+                                 <ColumnConstraints />
+                                 <ColumnConstraints />
+                                 <ColumnConstraints />
+                              </columnConstraints>
+                              <rowConstraints>
+                                 <RowConstraints />
+                                 <RowConstraints />
+                                 <RowConstraints />
+                              </rowConstraints>
+                                    </GridPane>
+                                    
+                                    <HBox alignment="CENTER" spacing="10">
+                                        <Button onAction="#addEmployee" prefWidth="100" styleClass="add-btn" text="Add" />
+                                        <Button onAction="#updateEmployee" prefWidth="100" styleClass="update-btn" text="Update" />
+                                        <Button onAction="#deleteEmployee" prefWidth="100" styleClass="delete-btn" text="Delete" />
+                                        <Button onAction="#clearFields" prefWidth="100" styleClass="clear-btn" text="Clear" />
+                                    </HBox>
+                                </VBox>
+                                
+                                <TableView fx:id="employeeTable" onMouseClicked="#selectEmployee" prefHeight="150.0" styleClass="table-view">
+                                    <columns>
+                                        <TableColumn fx:id="col_empUsername" prefWidth="130.0" text="Username" />
+                                        <TableColumn fx:id="col_empName" prefWidth="150.0" text="Full Name" />
+                                        <TableColumn fx:id="col_empPhone" prefWidth="110.0" text="Phone" />
+                                        <TableColumn fx:id="col_empEmail" prefWidth="150.0" text="Email" />
+                                        <TableColumn fx:id="col_empSalary" prefWidth="100.0" text="Salary" />
+                                        <TableColumn fx:id="col_empStatus" prefWidth="80.0" text="Status" />
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </ScrollPane>
+                    </children>
+                </AnchorPane>
+
+                <AnchorPane fx:id="menu_form" layoutX="200.0" prefHeight="600.0" prefWidth="900.0" styleClass="white-bg" visible="false">
+                    <Label layoutX="30.0" layoutY="20.0" styleClass="header-label" text="Menu Management">
+                        <font><Font name="Arial Bold" size="24.0" /></font>
+                    </Label>
+                </AnchorPane>
+
+                <AnchorPane fx:id="inventory_form" layoutX="200.0" prefHeight="600.0" prefWidth="900.0" styleClass="white-bg" visible="false">
+                    <Label layoutX="30.0" layoutY="20.0" styleClass="header-label" text="Inventory Management">
+                        <font><Font name="Arial Bold" size="24.0" /></font>
+                    </Label>
+                </AnchorPane>
+
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>

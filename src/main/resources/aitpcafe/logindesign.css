@@ -1,0 +1,112 @@
+/*avaliable icon: https://kordamp.org/ikonli/cheat-sheet-fontawesome5.html*/
+.root {
+    -primary-color: #c9a9a6;
+    -secondary-color: #d8c3a5;
+    -accent-color: #b5838d;
+    -accent-dark: #a47160;
+    -accent-hover: #e6b8a2;
+    -hover-color: #decbb7;
+    -white: #f9f6f2;
+    -black: #3e3a39;
+}
+
+.gradient {
+    -fx-background-color: linear-gradient(to bottom right, -primary-color, -secondary-color);
+}
+
+.white-form {
+    -fx-background-color: -white;
+    -fx-background-radius: 0 20px 20px 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, -5, 0);
+}
+
+.white-form-left {
+    -fx-background-color: -white;
+    -fx-background-radius: 20px 0 0 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, 5, 0);
+}
+
+.head-label {
+    -fx-border-color: -accent-dark;
+    -fx-border-width: 0 0 0 4px;
+    -fx-text-fill: -black;
+    -fx-padding: 0 0 0 8px;
+}
+
+.login-btn {
+    -fx-background-color: linear-gradient(to bottom right, -accent-color, -accent-dark);
+    -fx-background-radius: 12px;
+    -fx-cursor: hand;
+    -fx-text-fill: -white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.login-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, -accent-hover, -hover-color);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 2);
+}
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: linear-gradient(to bottom right, -primary-color, -secondary-color);
+    -fx-border-width: 1px;
+    -fx-text-fill: -black;
+    -fx-prompt-text-fill: derive(-black, 60%);
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-font-size: 15px;
+    -fx-padding: 10px;
+}
+
+.text-field:focused {
+    -fx-border-width: 2px;
+    -fx-border-color: -accent-color;
+    -fx-effect: dropshadow(gaussian, derive(-accent-color, 20%), 8, 0, 0, 0);
+    -fx-background-color: #fff;
+}
+
+.combo-box {
+    -fx-background-color: transparent;
+    -fx-border-color: linear-gradient(to bottom right, -primary-color, -secondary-color);
+    -fx-border-width: 1px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-font-size: 15px;
+}
+
+.combo-box:focused {
+    -fx-border-width: 2px;
+    -fx-border-color: -accent-color;
+    -fx-effect: dropshadow(gaussian, derive(-accent-color, 20%), 8, 0, 0, 0);
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: -black;
+}
+
+.back-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-text-fill: -accent-color;
+    -fx-border-color: -accent-color;
+    -fx-border-width: 2px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-font-size: 14px;
+}
+
+.back-btn:hover {
+    -fx-background-color: -accent-color;
+    -fx-text-fill: -white;
+}
+
+.hyperlink {
+    -fx-text-fill: -accent-color;
+    -fx-font-size: 14px;
+}
+
+.hyperlink:hover {
+    -fx-underline: true;
+    -fx-text-fill: -accent-dark;
+}

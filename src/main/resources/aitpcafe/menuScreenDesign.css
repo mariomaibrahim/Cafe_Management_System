@@ -1,0 +1,88 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Oct 26, 2025, 12:16:26 AM
+    Created by (Mariem Ibrahim)
+    menuScreenDesign File
+    
+*/
+
+.root {
+    -fx-background-color: linear-gradient(to bottom right, #0b2e26, #163b2f, #1f4f3a);
+}
+
+.label {
+    -fx-text-fill: #f0f0f0;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.nav-form {
+    -fx-background-color: linear-gradient(to right, #1f7a54, #2eb87f);
+    -fx-text-fill: #fff;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0.3, 0, 2);
+}
+
+.nav-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: #2eb87f;
+    -fx-border-width: 1.2px;
+    -fx-text-fill: #e8f5e9;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 6 14 6 14;
+    -fx-background-radius: 6;
+    -fx-transition: 0.3s;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.2, 0, 1);
+}
+
+.nav-btn:hover {
+    -fx-background-color: linear-gradient(to right, #2eb87f, #1f7a54);
+    -fx-text-fill: #fff;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 6, 0.3, 0, 2);
+}
+
+.menu-btn2 {
+    -fx-background-color: transparent;
+    -fx-border-color: #2eb87f;
+    -fx-border-width: 1px;
+    -fx-text-fill: #2eb87f;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 3, 0.1, 0, 1);
+}
+
+.menu-btn2:hover {
+    -fx-background-color: #2eb87f;
+    -fx-text-fill: #fff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0.2, 0, 2);
+}
+
+.logout-icon {
+    -fx-text-fill: #e8f5e9;
+}
+
+.shadow {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0.2, 0, 2);
+}
+
+.white-bg {
+    -fx-background-color: #f8f5f0;
+}
+
+.radius {
+    -fx-background-radius: 8px;
+}
+
+.transparent {
+    -fx-background-color: transparent;
+}

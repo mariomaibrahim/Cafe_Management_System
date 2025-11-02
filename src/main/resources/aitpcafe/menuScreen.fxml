@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <AnchorPane prefHeight="600.0" prefWidth="200.0" stylesheets="@menuScreenDesign.css">
+               <children>
+                  <BorderPane layoutY="-1.0" prefHeight="608.0" prefWidth="219.0" styleClass="nav-form">
+                     <stylesheets>
+                        <URL value="@mainScreenDesign.css" />
+                        <URL value="@mainScreenDesign.css" />
+                     </stylesheets>
+                  </BorderPane>
+                  <AnchorPane prefHeight="608.0" prefWidth="219.0">
+                     <children>
+                        <AnchorPane layoutX="10.0" prefHeight="167.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="12.0" layoutY="148.0" prefHeight="26.0" prefWidth="176.0" text=" Welcome Admin" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="96.0" fitWidth="94.0" layoutX="47.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../Downloads/fast-food.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <Button layoutX="15.0" layoutY="237.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="190.0" styleClass="nav-btn" stylesheets="@mainScreenDesign.css" text="Menu" />
+                        <Button layoutX="15.0" layoutY="285.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="190.0" styleClass="nav-btn" stylesheets="@mainScreenDesign.css" text="Inventory" />
+                        <Button layoutX="15.0" layoutY="334.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="190.0" styleClass="nav-btn" stylesheets="@mainScreenDesign.css" text="Customers" />
+                        <Label layoutX="22.0" layoutY="181.0" prefHeight="26.0" prefWidth="176.0" stylesheets="@mainScreenDesign.css" text="Cafe Desktop App" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="15.0" layoutY="548.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="190.0" styleClass="nav-btn" stylesheets="@mainScreenDesign.css" text="Log out" />
+                        <FontIcon iconColor="WHITE" iconLiteral="fas-angle-left" layoutX="42.0" layoutY="572.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

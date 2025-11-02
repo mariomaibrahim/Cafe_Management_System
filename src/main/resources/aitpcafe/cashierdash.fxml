@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aitpcafe.CashierdashController">
+    <children>
+        <AnchorPane prefHeight="600.0" prefWidth="1100.0">
+            <children>
+                <AnchorPane prefHeight="600.0" prefWidth="200.0" styleClass="nav-form" stylesheets="@cashierdash.css">
+                    <children>
+                        <VBox spacing="5" AnchorPane.topAnchor="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                            <HBox alignment="CENTER" spacing="8">
+                                <FontIcon iconColor="WHITE" iconLiteral="fas-coffee" iconSize="35"/>
+                                <Label text="Cashier" textFill="WHITE">
+                                    <font><Font name="Arial Bold" size="18.0"/></font>
+                                </Label>
+                            </HBox>
+                            
+                            <Label text="Point of Sale" textFill="WHITE" alignment="CENTER" prefWidth="180">
+                                <font><Font name="Arial" size="11.0"/></font>
+                            </Label>
+                        </VBox>
+                        
+                        <Button fx:id="dashboard_btn" layoutX="10.0" layoutY="120.0" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" text="Dashboard">
+                            <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-chart-line" iconSize="14"/></graphic>
+                        </Button>
+                        <Button fx:id="menu_btn" layoutX="10.0" layoutY="165.0" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" text="Menu">
+                            <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-utensils" iconSize="14"/></graphic>
+                        </Button>
+                        <Button fx:id="inventory_btn" layoutX="10.0" layoutY="210.0" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" text="Inventory">
+                            <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-box" iconSize="14"/></graphic>
+                        </Button>
+                        
+                        <Button fx:id="logout_btn" layoutX="10.0" layoutY="548.0" onAction="#logout" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" text="Logout">
+                            <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-sign-out-alt" iconSize="14"/></graphic>
+                        </Button>
+                    </children>
+                </AnchorPane>
+
+                <AnchorPane fx:id="dashboard_form" layoutX="200.0" prefHeight="600.0" prefWidth="900.0" styleClass="white-bg">
+                    <children>
+                        <ScrollPane fitToWidth="true" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                            <VBox spacing="15" style="-fx-padding: 20;">
+                                <Label text="Dashboard Overview" styleClass="header-label">
+                                    <font><Font name="Arial Bold" size="24.0"/></font>
+                                </Label>
+                                
+                                <GridPane hgap="15" vgap="15">
+                                    <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="stat-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                        <FontIcon iconColor="#3498db" iconLiteral="fas-shopping-cart" iconSize="32" layoutX="15.0" layoutY="45.0"/>
+                                        <Label layoutX="60.0" layoutY="15.0" text="Today Orders" styleClass="stat-label">
+                                            <font><Font size="13.0"/></font>
+                                        </Label>
+                                        <Label fx:id="todayOrders" layoutX="60.0" layoutY="40.0" text="0" styleClass="stat-value">
+                                            <font><Font name="Arial Bold" size="26.0"/></font>
+                                        </Label>
+                                    </AnchorPane>
+                                    
+                                    <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="stat-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                        <FontIcon iconColor="#27ae60" iconLiteral="fas-users" iconSize="32" layoutX="15.0" layoutY="45.0"/>
+                                        <Label layoutX="60.0" layoutY="15.0" text="Customers" styleClass="stat-label">
+                                            <font><Font size="13.0"/></font>
+                                        </Label>
+                                        <Label fx:id="todayCustomers" layoutX="60.0" layoutY="40.0" text="0" styleClass="stat-value">
+                                            <font><Font name="Arial Bold" size="26.0"/></font>
+                                        </Label>
+                                    </AnchorPane>
+                                    
+                                    <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="stat-card" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                                        <FontIcon iconColor="#e74c3c" iconLiteral="fas-dollar-sign" iconSize="32" layoutX="15.0" layoutY="45.0"/>
+                                        <Label layoutX="60.0" layoutY="15.0" text="Today Sales" styleClass="stat-label">
+                                            <font><Font size="13.0"/></font>
+                                        </Label>
+                                        <Label fx:id="todaySales" layoutX="60.0" layoutY="40.0" text="0.00 EGP" styleClass="stat-value">
+                                            <font><Font name="Arial Bold" size="24.0"/></font>
+                                        </Label>
+                                    </AnchorPane>
+                                </GridPane>
+                                
+                                <HBox spacing="10">
+                                    <Button text="View Statistics" onAction="#showStatistics" styleClass="action-btn">
+                                        <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-chart-bar" iconSize="13"/></graphic>
+                                    </Button>
+                                    <Button text="Customer List" onAction="#showCustomers" styleClass="action-btn">
+                                        <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-address-book" iconSize="13"/></graphic>
+                                    </Button>
+                                    <Button text="Edit Profile" onAction="#editProfile" styleClass="action-btn-edit">
+                                        <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-user-edit" iconSize="13"/></graphic>
+                                    </Button>
+                                </HBox>
+                                
+                                <GridPane hgap="15" vgap="10">
+                                    <VBox styleClass="info-card" spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                        <Label text="Personal Information" styleClass="section-title">
+                                            <font><Font name="Arial Bold" size="16.0"/></font>
+                                        </Label>
+                                        <HBox spacing="10">
+                                            <Label text="Name:" styleClass="info-label"/>
+                                            <Label fx:id="cashierName" text="N/A" styleClass="info-value"/>
+                                        </HBox>
+                                        <HBox spacing="10">
+                                            <Label text="Phone:" styleClass="info-label"/>
+                                            <Label fx:id="cashierPhone" text="N/A" styleClass="info-value"/>
+                                        </HBox>
+                                        <HBox spacing="10">
+                                            <Label text="Salary:" styleClass="info-label"/>
+                                            <Label fx:id="cashierSalary" text="N/A" styleClass="salary-value"/>
+                                        </HBox>
+                                    </VBox>
+                                    
+                                    <VBox styleClass="performance-card" spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                        <Label text="Performance" styleClass="section-title-white">
+                                            <font><Font name="Arial Bold" size="16.0"/></font>
+                                        </Label>
+                                        <Label text="Target: 20 Orders" styleClass="perf-label"/>
+                                        <HBox spacing="10" alignment="CENTER_LEFT">
+                                            <ProgressBar fx:id="performanceBar" prefWidth="200" prefHeight="20" styleClass="performance-bar"/>
+                                            <Label fx:id="performanceLabel" text="0%" styleClass="perf-value"/>
+                                        </HBox>
+                                    </VBox>
+                                </GridPane>
+                                
+                                <VBox fx:id="statisticsSection" styleClass="stats-section" spacing="12" visible="false">
+                                    <Label text="Detailed Statistics" styleClass="section-title">
+                                        <font><Font name="Arial Bold" size="18.0"/></font>
+                                    </Label>
+                                    
+                                    <GridPane hgap="12" vgap="12">
+                                        <VBox styleClass="mini-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                            <Label text="Total Orders" styleClass="mini-label"/>
+                                            <Label fx:id="totalOrders" text="0" styleClass="mini-value"/>
+                                        </VBox>
+                                        <VBox styleClass="mini-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                            <Label text="Total Sales" styleClass="mini-label"/>
+                                            <Label fx:id="totalSales" text="0.00 EGP" styleClass="mini-value"/>
+                                        </VBox>
+                                        <VBox styleClass="mini-card" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                                            <Label text="Total Customers" styleClass="mini-label"/>
+                                            <Label fx:id="totalCustomers" text="0" styleClass="mini-value"/>
+                                        </VBox>
+                                        
+                                        <VBox styleClass="mini-card" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                            <Label text="Week Orders" styleClass="mini-label"/>
+                                            <Label fx:id="weekOrders" text="0" styleClass="mini-value"/>
+                                        </VBox>
+                                        <VBox styleClass="mini-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <Label text="Week Sales" styleClass="mini-label"/>
+                                            <Label fx:id="weekSales" text="0.00 EGP" styleClass="mini-value"/>
+                                        </VBox>
+                                        <VBox styleClass="mini-card" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                            <Label text="Avg Order" styleClass="mini-label"/>
+                                            <Label fx:id="avgOrder" text="0.00 EGP" styleClass="mini-value"/>
+                                        </VBox>
+                                    </GridPane>
+                                </VBox>
+                                
+                                <Label text="Recent Orders" styleClass="section-title">
+                                    <font><Font name="Arial Bold" size="18.0"/></font>
+                                </Label>
+                                
+                                <TableView fx:id="ordersTable" prefHeight="150.0" styleClass="table-view">
+                                    <columns>
+                                        <TableColumn fx:id="col_orderId" prefWidth="100.0" text="Order ID"/>
+                                        <TableColumn fx:id="col_customer" prefWidth="150.0" text="Customer"/>
+                                        <TableColumn fx:id="col_items" prefWidth="180.0" text="Items"/>
+                                        <TableColumn fx:id="col_amount" prefWidth="120.0" text="Amount"/>
+                                        <TableColumn fx:id="col_time" prefWidth="150.0" text="Time"/>
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </ScrollPane>
+                    </children>
+                </AnchorPane>
+
+                <AnchorPane fx:id="menu_form" layoutX="200.0" prefHeight="600.0" prefWidth="900.0" styleClass="white-bg" visible="false">
+                    <Label layoutX="30.0" layoutY="20.0" text="Menu Management" styleClass="header-label">
+                        <font><Font name="Arial Bold" size="24.0"/></font>
+                    </Label>
+                </AnchorPane>
+
+                <AnchorPane fx:id="inventory_form" layoutX="200.0" prefHeight="600.0" prefWidth="900.0" styleClass="white-bg" visible="false">
+                    <Label layoutX="30.0" layoutY="20.0" text="Inventory View" styleClass="header-label">
+                        <font><Font name="Arial Bold" size="24.0"/></font>
+                    </Label>
+                </AnchorPane>
+
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>

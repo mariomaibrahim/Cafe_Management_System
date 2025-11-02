@@ -1,0 +1,171 @@
+/*
+    File Name   : inventoryScreenDesign.css
+    Created On  : Oct 24, 2025
+    Created By  : Mariem Ibrahim
+    Description : تصميم واجهة شاشة إدارة المخزون (Inventory Screen)
+*/
+
+/*==============================*/
+/*         تصميم الخلفية        */
+/*==============================*/
+.root {
+    /* خلفية متدرجة بألوان هادئة تميل للأخضر الداكن */
+    -fx-background-color: linear-gradient(to bottom right, #0b2e26, #163b2f, #1f4f3a);
+}
+
+/*==============================*/
+/*     إعدادات النصوص العامة     */
+/*==============================*/
+.label {
+    /* تنسيق العناوين داخل الشاشة */
+    -fx-text-fill: #f0f0f0;        /* لون الخط أبيض فاتح */
+    -fx-font-size: 20px;           /* حجم خط متوسط */
+    -fx-font-weight: bold;         /* خط عريض */
+}
+
+.text {
+    /* تنسيق النصوص الصغيرة أو التوضيحية */
+    -fx-text-fill: #615a5a;        /* رمادي داكن */
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.combo-box {
+    /* تنسيق مربعات الاختيار (Dropdowns) */
+    -fx-text-fill: #615a5a;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+/*==============================*/
+/*       تصميم الأزرار الرئيسية  */
+/*==============================*/
+.nav-form {
+    /* الزرار الأساسي للتنقل بين الصفحات */
+    -fx-background-color: linear-gradient(to right, #1f7a54, #2eb87f);
+    -fx-text-fill: #fff;              /* النص باللون الأبيض */
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;        /* زوايا دائرية ناعمة */
+    -fx-cursor: hand;                 /* شكل اليد عند المرور */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0.3, 0, 2); /* ظل خفيف */
+}
+
+/*==============================*/
+/*     أزرار التنقل الثانوية     */
+/*==============================*/
+.nav-btn {
+    /* الأزرار الإضافية في القائمة أو الشريط */
+    -fx-background-color: transparent;
+    -fx-border-color: #2eb87f;
+    -fx-border-width: 1.2px;
+    -fx-text-fill: #e8f5e9;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 6 14 6 14;
+    -fx-background-radius: 6;
+    -fx-transition: 0.3s;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.2, 0, 1);
+}
+
+/* تأثير عند تمرير الماوس فوق الزر */
+.nav-btn:hover {
+    -fx-background-color: linear-gradient(to right, #2eb87f, #1f7a54);
+    -fx-text-fill: #fff;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 6, 0.3, 0, 2);
+}
+
+/*==============================*/
+/*      زر ثانوي بالمخزون       */
+/*==============================*/
+.inventory-btn2 {
+    -fx-background-color: transparent;
+    -fx-border-color: #2eb87f;
+    -fx-border-width: 1px;
+    -fx-text-fill: #2eb87f;
+    -fx-font-size: 14px;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 3, 0.1, 0, 1);
+    -fx-background-radius: 8px;
+}
+
+/* تأثير Hover لزر المخزون */
+.inventory-btn2:hover {
+    -fx-background-color: #2eb87f;
+    -fx-text-fill: #fff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0.2, 0, 2);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+     -fx-background-radius: 8px;
+}
+
+/*==============================*/
+/*      أيقونة تسجيل الخروج     */
+/*==============================*/
+.logout-icon {
+    -fx-text-fill: #e8f5e9;
+}
+
+/*==============================*/
+/*        الظلال العامة          */
+/*==============================*/
+.shadow {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0.2, 0, 2);
+}
+
+/*==============================*/
+/*        صناديق وخلفيات        */
+/*==============================*/
+.white-bg {
+    /* خلفية فاتحة للأقسام المنفصلة */
+    -fx-background-color: #f8f5f0;
+}
+
+.radius {
+    /* زوايا دائرية عامة */
+    -fx-background-radius: 8px;
+}
+
+.transparent {
+    /* خلفية شفافة عند الحاجة */
+    -fx-background-color: transparent;
+}
+
+/*==============================*/
+/*        تصميم الجدول Table     */
+/*==============================*/
+.table-view {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-radius: 3px;
+    -fx-border-width: 1.5px;
+    -fx-border-color: #2eb87f;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.2, 0, 2);
+}
+
+/* خلفية رأس الجدول */
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to right, #1f7a54, #2eb87f);
+    -fx-background-insets: 0;
+}
+
+/* تنسيق رؤوس الأعمدة */
+.table-view .column-header, .filter {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+    -fx-text-fill: #fff;
+}
+
+/* النصوص داخل خلايا الجدول */
+.table-view .cell {
+    -fx-text-fill: #ffffff;   /* النص أبيض بالكامل */
+}
+.header-text{
+    -fx-text-fill:#ffffff;
+    -fx-text-size:30;
+}
