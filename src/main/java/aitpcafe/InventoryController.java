@@ -54,6 +54,7 @@ public class InventoryController implements Initializable {
                         rs.getInt("id"),
                         rs.getString("product_id"),
                         rs.getString("product_name"),
+                        rs.getString("type"),  // إضافة type
                         rs.getInt("stock"),
                         rs.getDouble("price"),
                         rs.getString("status"),
@@ -64,6 +65,7 @@ public class InventoryController implements Initializable {
             }
         } catch (Exception e) {
             System.err.println("Error loading products: " + e.getMessage());
+            e.printStackTrace();
         }
         return listData;
     }
@@ -90,35 +92,44 @@ public class InventoryController implements Initializable {
 
         inventory_productID.setText(prod.getProductId());
         inventory_productName.setText(prod.getProductName());
+        inventory_type.getSelectionModel().select(prod.getType());  // تم الإصلاح: استخدام type بدلاً من status
         inventory_stock.setText(String.valueOf(prod.getStock()));
         inventory_price.setText(String.valueOf(prod.getPrice()));
-        inventory_type.getSelectionModel().select(prod.getStatus());
         inventory_status.getSelectionModel().select(prod.getStatus());
 
-        if (prod.getImage() != null) {
+        if (prod.getImage() != null && !prod.getImage().isEmpty()) {
             File file = new File(prod.getImage());
             if (file.exists()) {
-                Image img = new Image(file.toURI().toString());
+                Image img = new Image(file.toURI().toString(), 129, 148, false, true);
                 inventory_image.setImage(img);
             }
         }
+        
+        data.path = prod.getImage() != null ? prod.getImage() : "";
     }
 
     // ---------------------- ADD PRODUCT ----------------------
     @FXML
     private void addProduct(ActionEvent event) {
-        String sql = "INSERT INTO product (product_id, product_name, stock, price, status, image, date) VALUES (?,?,?,?,?,?,?)";
-        connect = database.connectDB();
-
         if (fieldsEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Error Message", "Please fill all blank fields");
             return;
         }
 
+        String sql = "INSERT INTO product (product_id, product_name, type, stock, price, status, image, date) VALUES (?,?,?,?,?,?,?,?)";
+        
         try {
+            connect = database.connectDB();
+            
+            if (connect == null) {
+                showAlert(Alert.AlertType.ERROR, "Database Error", "Cannot connect to database!");
+                return;
+            }
+
+            // Check if product ID already exists
             String checkSQL = "SELECT product_id FROM product WHERE product_id = ?";
             prepare = connect.prepareStatement(checkSQL);
-            prepare.setString(1, inventory_productID.getText());
+            prepare.setString(1, inventory_productID.getText().trim());
             result = prepare.executeQuery();
 
             if (result.next()) {
@@ -127,23 +138,41 @@ public class InventoryController implements Initializable {
                 return;
             }
 
+            // Insert new product
             prepare = connect.prepareStatement(sql);
-            prepare.setString(1, inventory_productID.getText());
-            prepare.setString(2, inventory_productName.getText());
-            prepare.setInt(3, Integer.parseInt(inventory_stock.getText()));
-            prepare.setDouble(4, Double.parseDouble(inventory_price.getText()));
-            prepare.setString(5, inventory_status.getValue());
-            prepare.setString(6, data.path);
-            prepare.setDate(7, new java.sql.Date(new Date().getTime()));
-            prepare.executeUpdate();
+            prepare.setString(1, inventory_productID.getText().trim());
+            prepare.setString(2, inventory_productName.getText().trim());
+            prepare.setString(3, inventory_type.getValue());
+            prepare.setInt(4, Integer.parseInt(inventory_stock.getText().trim()));
+            prepare.setDouble(5, Double.parseDouble(inventory_price.getText().trim()));
+            prepare.setString(6, inventory_status.getValue());
+            prepare.setString(7, data.path != null ? data.path : "");
+            prepare.setDate(8, new java.sql.Date(new Date().getTime()));
+            
+            int rowsAffected = prepare.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Product Added Successfully!");
+                inventoryShowData();
+                clearFields();
+            }
 
-            showAlert(Alert.AlertType.INFORMATION, "Information Message", "Successfully Added!");
-            inventoryShowData();
-            clearFields();
-
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Stock must be a number and Price must be a valid number.");
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "Invalid input for Stock or Price.");
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Database Error", "SQL Error: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to add product: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (result != null) result.close();
+                if (prepare != null) prepare.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -151,6 +180,7 @@ public class InventoryController implements Initializable {
     @FXML
     private void inventoryImportBtn(ActionEvent event) {
         FileChooser openFile = new FileChooser();
+        openFile.setTitle("Select Product Image");
         openFile.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
         File file = openFile.showOpenDialog(inventory_form.getScene().getWindow());
         if (file != null) {
@@ -168,25 +198,39 @@ public class InventoryController implements Initializable {
             return;
         }
 
-        String sql = "UPDATE product SET product_name=?, stock=?, price=?, status=?, image=? WHERE product_id=?";
+        if (fieldsEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error Message", "Please fill all blank fields");
+            return;
+        }
+
+        String sql = "UPDATE product SET product_name=?, type=?, stock=?, price=?, status=?, image=? WHERE product_id=?";
         connect = database.connectDB();
 
         try {
             prepare = connect.prepareStatement(sql);
-            prepare.setString(1, inventory_productName.getText());
-            prepare.setInt(2, Integer.parseInt(inventory_stock.getText()));
-            prepare.setDouble(3, Double.parseDouble(inventory_price.getText()));
-            prepare.setString(4, inventory_status.getValue());
-            prepare.setString(5, data.path);
-            prepare.setString(6, inventory_productID.getText());
-            prepare.executeUpdate();
-
-            showAlert(Alert.AlertType.INFORMATION, "Updated", "Successfully Updated!");
-            inventoryShowData();
-            clearFields();
-        } catch (Exception e) {
+            prepare.setString(1, inventory_productName.getText().trim());
+            prepare.setString(2, inventory_type.getValue());  // إضافة type
+            prepare.setInt(3, Integer.parseInt(inventory_stock.getText().trim()));
+            prepare.setDouble(4, Double.parseDouble(inventory_price.getText().trim()));
+            prepare.setString(5, inventory_status.getValue());
+            prepare.setString(6, data.path != null ? data.path : "");
+            prepare.setString(7, inventory_productID.getText().trim());
+            
+            int rowsAffected = prepare.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Product Updated Successfully!");
+                inventoryShowData();
+                clearFields();
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Warning", "No product found with this ID");
+            }
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Stock must be a number and Price must be a valid number.");
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "Invalid input or empty fields.");
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to update: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -198,26 +242,41 @@ public class InventoryController implements Initializable {
             return;
         }
 
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Delete Confirmation");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Are you sure you want to delete this product?");
+        
+        if (confirm.showAndWait().get() != ButtonType.OK) {
+            return;
+        }
+
         String sql = "DELETE FROM product WHERE product_id=?";
         connect = database.connectDB();
 
         try {
             prepare = connect.prepareStatement(sql);
-            prepare.setString(1, inventory_productID.getText());
-            prepare.executeUpdate();
-
-            showAlert(Alert.AlertType.INFORMATION, "Deleted", "Successfully Deleted!");
-            inventoryShowData();
-            clearFields();
+            prepare.setString(1, inventory_productID.getText().trim());
+            int rowsAffected = prepare.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Product Deleted Successfully!");
+                inventoryShowData();
+                clearFields();
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Warning", "No product found with this ID");
+            }
         } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete: " + e.getMessage());
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "Unable to delete product.");
         }
     }
 
     // ---------------------- CLEAR FIELDS ----------------------
     @FXML
-    private void clearFields(ActionEvent event) { clearFields(); }
+    private void clearFields(ActionEvent event) { 
+        clearFields(); 
+    }
 
     private void clearFields() {
         inventory_productID.clear();
@@ -231,10 +290,11 @@ public class InventoryController implements Initializable {
     }
 
     private boolean fieldsEmpty() {
-        return inventory_productID.getText().isEmpty()
-                || inventory_productName.getText().isEmpty()
-                || inventory_stock.getText().isEmpty()
-                || inventory_price.getText().isEmpty()
+        return inventory_productID.getText().trim().isEmpty()
+                || inventory_productName.getText().trim().isEmpty()
+                || inventory_type.getValue() == null  // إضافة فحص type
+                || inventory_stock.getText().trim().isEmpty()
+                || inventory_price.getText().trim().isEmpty()
                 || inventory_status.getValue() == null;
     }
 
@@ -253,13 +313,14 @@ public class InventoryController implements Initializable {
                 stage.setTitle("Cafe Management System - Login");
                 stage.show();
             } catch (Exception e) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Failed to logout.");
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to logout: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
 
     public void displayUsername() {
-        if (username != null) {
+        if (username != null && data.username != null) {
             username.setText(data.username);
         }
     }
@@ -268,10 +329,15 @@ public class InventoryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         displayUsername();
+        
+        // تعبئة ComboBox
         inventory_type.setItems(FXCollections.observableArrayList("Meals", "Drinks", "Desserts"));
         inventory_status.setItems(FXCollections.observableArrayList("Available", "Not Available"));
+        
+        // عرض البيانات
         inventoryShowData();
 
+        // إضافة Listener للجدول
         inventory_table.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 inventorySelectData();

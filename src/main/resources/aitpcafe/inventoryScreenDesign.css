@@ -163,7 +163,91 @@
 
 /* النصوص داخل خلايا الجدول */
 .table-view .cell {
-    -fx-text-fill: #ffffff;   /* النص أبيض بالكامل */
+    -fx-text-fill: #8a8a8a;
+    -fx-alignment: center;
+}
+.table-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+    -fx-min-height: 0;
+}
+
+.table-view .scroll-bar:horizontal .thumb,
+.table-view .scroll-bar:horizontal .track,
+.table-view .scroll-bar:horizontal .increment-button,
+.table-view .scroll-bar:horizontal .decrement-button {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+    -fx-min-height: 0;
+}
+
+/* تصميم ScrollBar الرأسي فقط */
+.table-view .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12px;
+    -fx-padding: 2 2 2 2;
+}
+
+/* مسار ScrollBar */
+.table-view .scroll-bar:vertical .track {
+    -fx-background-color: #e8f5e9;
+    -fx-background-radius: 6px;
+    -fx-border-color: transparent;
+}
+
+/* المقبض (Thumb) */
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: linear-gradient(to bottom, #2eb87f, #1f7a54);
+    -fx-background-radius: 6px;
+    -fx-background-insets: 1;
+}
+
+/* تأثير Hover على المقبض */
+.table-view .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: linear-gradient(to bottom, #26a65b, #1a5f41);
+}
+
+/* تأثير الضغط على المقبض */
+.table-view .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: #1a5f41;
+}
+
+/* إخفاء الأسهم (الأزرار) */
+.table-view .scroll-bar:vertical .increment-button,
+.table-view .scroll-bar:vertical .decrement-button {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+    -fx-min-height: 0;
+}
+
+/* إخفاء الزاوية بين ScrollBars */
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+.table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f8f9fa;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #e8f5e9;
+    -fx-cursor: hand;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #c8e6c9;
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: #1a5f41;
+    -fx-font-weight: 600;
 }
 .header-text{
     -fx-text-fill:#ffffff;
