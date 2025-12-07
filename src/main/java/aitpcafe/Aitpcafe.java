@@ -13,10 +13,10 @@ public class Aitpcafe extends Application {
     public void start(Stage stage) {
         try {
             // تحميل واجهة تسجيل الدخول
-            Parent root = FXMLLoader.load(getClass().getResource("InventoryScreen.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("menuScreen.fxml"));
 
             Scene scene = new Scene(root);
-            stage.setTitle("Cafe Management System - Login");
+            stage.setTitle("Cafe Management System");
             stage.setScene(scene);
             stage.show();
 

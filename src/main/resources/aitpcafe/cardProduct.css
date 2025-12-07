@@ -1,0 +1,276 @@
+/* ========================================
+   MINIMAL & CALM PRODUCT CARD DESIGN
+   تصميم هادئ وبسيط بألوان خضراء
+   ======================================== */
+
+/* Root Variables - ألوان هادئة */
+:root {
+    -fx-primary-green: #52B788;
+    -fx-primary-light: #74C69D;
+    -fx-primary-dark: #40916C;
+    -fx-green-soft: #95D5B2;
+    -fx-green-pale: #D8F3DC;
+    -fx-text-dark: #2D3436;
+    -fx-text-gray: #636E72;
+    -fx-bg-white: #FFFFFF;
+    -fx-bg-cream: #F8F9FA;
+}
+
+/* ========================================
+   CARD CONTAINER - بسيط وهادئ
+   ======================================== */
+.Card {
+    -fx-background-color: -fx-bg-white;
+    -fx-background-radius: 16px;
+    -fx-border-color: #E8E8E8;
+    -fx-border-width: 1;
+    -fx-border-radius: 16px;
+    -fx-padding: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 15, 0, 0, 3);
+}
+
+.Card:hover {
+    -fx-border-color: -fx-green-soft;
+    -fx-effect: dropshadow(gaussian, rgba(82, 183, 136, 0.15), 20, 0, 0, 5);
+}
+
+/* ========================================
+   IMAGE CONTAINER - نظيف وبسيط
+   ======================================== */
+.image-container {
+    -fx-background-color: -fx-green-pale;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-padding: 8;
+}
+
+#productimage {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.04), 6, 0, 0, 2);
+}
+
+/* ========================================
+   PRODUCT NAME - خط بسيط
+   ======================================== */
+#productName {
+    -fx-text-fill: -fx-text-dark;
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
+    -fx-padding: 5 0 0 5;
+}
+
+/* ========================================
+   PRODUCT PRICE - لون أخضر هادئ
+   ======================================== */
+#productPrice {
+    -fx-text-fill: -fx-primary-dark;
+    -fx-font-family: "Segoe UI Semibold", "Arial", sans-serif;
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-padding: 2 0 0 5;
+}
+
+/* ========================================
+   ADD BUTTON - تصميم نظيف
+   ======================================== */
+#productBtn {
+    -fx-background-color: -fx-primary-green;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 13px;
+    -fx-font-weight: 500;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+    -fx-padding: 7 18;
+    -fx-effect: dropshadow(gaussian, rgba(82, 183, 136, 0.25), 10, 0, 0, 3);
+}
+
+#productBtn:hover {
+    -fx-background-color: -fx-primary-light;
+    -fx-effect: dropshadow(gaussian, rgba(82, 183, 136, 0.35), 12, 0, 0, 4);
+}
+
+#productBtn:pressed {
+    -fx-background-color: -fx-primary-dark;
+    -fx-effect: dropshadow(gaussian, rgba(82, 183, 136, 0.2), 8, 0, 0, 2);
+}
+
+/* ========================================
+   SPINNER - تصميم بسيط
+   ======================================== */
+#productScroll {
+    -fx-background-color: white;
+    -fx-border-color: #DEDEDE;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-border-width: 1;
+}
+
+#productScroll .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: -fx-text-dark;
+    -fx-font-size: 13px;
+    -fx-font-weight: 500;
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
+    -fx-alignment: center;
+}
+
+#productScroll .increment-arrow-button,
+#productScroll .decrement-arrow-button {
+    -fx-background-color: #F5F5F5;
+    -fx-background-radius: 6px;
+}
+
+#productScroll .increment-arrow-button:hover,
+#productScroll .decrement-arrow-button:hover {
+    -fx-background-color: -fx-green-pale;
+}
+
+#productScroll .increment-arrow-button .increment-arrow,
+#productScroll .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: -fx-text-gray;
+}
+
+#productScroll .increment-arrow-button:hover .increment-arrow,
+#productScroll .decrement-arrow-button:hover .decrement-arrow {
+    -fx-background-color: -fx-primary-green;
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.white-bg {
+    -fx-background-color: #F8F9FA;
+}
+
+.transparent {
+    -fx-background-color: transparent;
+}
+
+.inventory-btn2 {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 6, 0, 0, 2);
+}
+
+/* ========================================
+   RADIUS CLASSES
+   ======================================== */
+.radius {
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+}
+
+.radius-small {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
+
+.radius-medium {
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+}
+
+.radius-large {
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+}
+
+/* ========================================
+   CONTAINERS
+   ======================================== */
+.VBox {
+    -fx-spacing: 6;
+    -fx-padding: 8;
+}
+
+.HBox {
+    -fx-spacing: 4;
+    -fx-alignment: center-left;
+}
+
+/* ========================================
+   SCROLLBAR - تصميم نظيف
+   ======================================== */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgba(82, 183, 136, 0.25);
+    -fx-background-radius: 8px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgba(82, 183, 136, 0.4);
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+}
+
+/* ========================================
+   ALTERNATIVE THEMES - بدائل هادئة
+   ======================================== */
+
+/* Soft Blue Theme */
+.card-blue #productBtn {
+    -fx-background-color: #5DADE2;
+}
+
+.card-blue #productBtn:hover {
+    -fx-background-color: #7FC5EC;
+}
+
+.card-blue .card-container:hover {
+    -fx-border-color: #7FC5EC;
+}
+
+/* Soft Beige Theme */
+.card-beige #productBtn {
+    -fx-background-color: #D4A574;
+}
+
+.card-beige #productBtn:hover {
+    -fx-background-color: #E0B886;
+}
+
+.card-beige .card-container:hover {
+    -fx-border-color: #E0B886;
+}
+
+/* ========================================
+   OUT OF STOCK STYLE
+   ======================================== */
+#productBtn:disabled {
+    -fx-background-color: #E0E0E0;
+    -fx-text-fill: #9E9E9E;
+    -fx-opacity: 0.7;
+}
+
+/* ========================================
+   MINIMAL RESPONSIVE
+   ======================================== */
+@media (max-width: 250px) {
+    #productName {
+        -fx-font-size: 14px;
+    }
+    
+    #productPrice {
+        -fx-font-size: 15px;
+    }
+    
+    #productBtn {
+        -fx-font-size: 12px;
+        -fx-padding: 6 15;
+    }
+}

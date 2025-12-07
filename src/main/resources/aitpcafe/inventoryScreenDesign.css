@@ -10,7 +10,7 @@
 /*==============================*/
 .root {
     /* خلفية متدرجة بألوان هادئة تميل للأخضر الداكن */
-    -fx-background-color: linear-gradient(to bottom right, #0b2e26, #163b2f, #1f4f3a);
+    -fx-background-color: linear-gradient(to bottom right, #0d3d32, #1a4f3f, #26614d);
 }
 
 /*==============================*/
@@ -42,12 +42,12 @@
 /*==============================*/
 .nav-form {
     /* الزرار الأساسي للتنقل بين الصفحات */
-    -fx-background-color: linear-gradient(to right, #1f7a54, #2eb87f);
-    -fx-text-fill: #fff;              /* النص باللون الأبيض */
+    -fx-background-color: linear-gradient(to right, #008B8B, #20B2AA);
+    -fx-text-fill: #ffffff;              /* النص باللون الأبيض */
     -fx-font-weight: bold;
     -fx-background-radius: 10;        /* زوايا دائرية ناعمة */
     -fx-cursor: hand;                 /* شكل اليد عند المرور */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0.3, 0, 2); /* ظل خفيف */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.4, 0, 3); /* ظل واضح */
 }
 
 /*==============================*/
@@ -56,52 +56,71 @@
 .nav-btn {
     /* الأزرار الإضافية في القائمة أو الشريط */
     -fx-background-color: transparent;
-    -fx-border-color: #2eb87f;
+    -fx-border-color: #74c69d;
     -fx-border-width: 1.2px;
-    -fx-text-fill: #e8f5e9;
+    -fx-text-fill: #000000;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-cursor: hand;
     -fx-padding: 6 14 6 14;
-    -fx-background-radius: 6;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
     -fx-transition: 0.3s;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.2, 0, 1);
 }
 
 /* تأثير عند تمرير الماوس فوق الزر */
 .nav-btn:hover {
-    -fx-background-color: linear-gradient(to right, #2eb87f, #1f7a54);
-    -fx-text-fill: #fff;
+    -fx-background-color: #95d5b2;
+    -fx-text-fill: #000000;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
     -fx-scale-x: 1.03;
     -fx-scale-y: 1.03;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 6, 0.3, 0, 2);
+}
+
+.nav-btn:pressed {
+    -fx-background-color: #95d5b2;
+    -fx-text-fill: #000000;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
 }
 
 /*==============================*/
 /*      زر ثانوي بالمخزون       */
 /*==============================*/
 .inventory-btn2 {
-    -fx-background-color: transparent;
-    -fx-border-color: #2eb87f;
+    -fx-background-color: #fff;
+    -fx-border-color: #74c69d;
     -fx-border-width: 1px;
-    -fx-text-fill: #2eb87f;
+    -fx-text-fill: #000000;
     -fx-font-size: 14px;
     -fx-scale-x: 1.03;
     -fx-scale-y: 1.03;
     -fx-font-weight: bold;
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 3, 0.1, 0, 1);
-    -fx-background-radius: 8px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
 }
 
 /* تأثير Hover لزر المخزون */
 .inventory-btn2:hover {
-    -fx-background-color: #2eb87f;
-    -fx-text-fill: #fff;
+    -fx-background-color: #95d5b2;
+    -fx-text-fill: #000000;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0.2, 0, 2);
     -fx-scale-x: 1.03;
     -fx-scale-y: 1.03;
-     -fx-background-radius: 8px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
+
+.inventory-btn2:pressed {
+    -fx-background-color: #95d5b2;
+    -fx-text-fill: #000000;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
 }
 
 /*==============================*/
@@ -144,13 +163,13 @@
     -fx-padding: 0;
     -fx-border-radius: 3px;
     -fx-border-width: 1.5px;
-    -fx-border-color: #2eb87f;
+    -fx-border-color: #74c69d;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.2, 0, 2);
 }
 
 /* خلفية رأس الجدول */
 .table-view .column-header-background {
-    -fx-background-color: linear-gradient(to right, #1f7a54, #2eb87f);
+    -fx-background-color: linear-gradient(to right, #52b788, #74c69d);
     -fx-background-insets: 0;
 }
 
@@ -199,19 +218,19 @@
 
 /* المقبض (Thumb) */
 .table-view .scroll-bar:vertical .thumb {
-    -fx-background-color: linear-gradient(to bottom, #2eb87f, #1f7a54);
+    -fx-background-color: linear-gradient(to bottom, #74c69d, #52b788);
     -fx-background-radius: 6px;
     -fx-background-insets: 1;
 }
 
 /* تأثير Hover على المقبض */
 .table-view .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: linear-gradient(to bottom, #26a65b, #1a5f41);
+    -fx-background-color: linear-gradient(to bottom, #95d5b2, #74c69d);
 }
 
 /* تأثير الضغط على المقبض */
 .table-view .scroll-bar:vertical .thumb:pressed {
-    -fx-background-color: #1a5f41;
+    -fx-background-color: #52b788;
 }
 
 /* إخفاء الأسهم (الأزرار) */
@@ -242,11 +261,11 @@
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #c8e6c9;
+    -fx-background-color: #d0d0d0;
 }
 
 .table-row-cell:selected .table-cell {
-    -fx-text-fill: #1a5f41;
+    -fx-text-fill: #000000;
     -fx-font-weight: 600;
 }
 .header-text{
