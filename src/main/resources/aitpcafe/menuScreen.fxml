@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" stylesheets="@menuScreenDesign.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aitpcafe.MenuController">
+   <children>
+      <AnchorPane fx:id="mainContainer" prefHeight="650.0" prefWidth="1100.0" styleClass="root">
+         <children>
+            <AnchorPane fx:id="menu_form" layoutX="220.0" prefHeight="650.0" prefWidth="880.0" styleClass="white-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ScrollPane fitToWidth="true" styleClass="scroll-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <VBox spacing="14">
+                        <padding>
+                           <Insets bottom="18" left="18" right="18" top="18" />
+                        </padding>
+                        <children>
+                           <HBox alignment="CENTER_LEFT" spacing="10">
+                              <FontIcon iconColor="#27ae60" iconLiteral="fas-utensils" iconSize="26" />
+                              <Label styleClass="header-label" text="Menu - Order Management">
+                                 <font><Font name="Arial Bold" size="22.0" /></font>
+                              </Label>
+                           </HBox>
+                           
+                           <HBox spacing="14">
+                              <VBox spacing="12" HBox.hgrow="ALWAYS">
+                                 <VBox spacing="12" styleClass="container-card">
+                                    <HBox alignment="CENTER_LEFT" spacing="8">
+                                       <FontIcon iconColor="#27ae60" iconLiteral="fas-shopping-basket" iconSize="18" />
+                                       <Label styleClass="section-title" text="Available Products">
+                                          <font><Font name="Arial Bold" size="15.0" /></font>
+                                       </Label>
+                                    </HBox>
+                                    
+                                    <ScrollPane fx:id="menu_scrollpane" fitToWidth="true" prefHeight="500.0" styleClass="products-scroll">
+                                       <GridPane fx:id="menu_gridpane" />
+                                    </ScrollPane>
+                                 </VBox>
+                              </VBox>
+                              
+                              <VBox maxWidth="290" minWidth="290" prefWidth="290" spacing="12">
+                                 <VBox spacing="12" styleClass="container-card">
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="250.0">
+                                       <Label alignment="CENTER" prefHeight="20.0" prefWidth="250.0" styleClass="section-title" text="Order Place" textAlignment="CENTER">
+                                          <font><Font name="Arial Bold" size="15.0" /></font>
+                                       </Label>
+                                    </HBox>
+                                    
+                                    <Line endX="240.0" stroke="#c8e6c9" strokeWidth="2" />
+                                    
+                                    <VBox spacing="7">
+                                       <Label styleClass="sub-label" text="Order Type">
+                                          <font><Font name="Arial Bold" size="12.0" /></font>
+                                       </Label>
+                                       <HBox alignment="CENTER" spacing="5">
+                                          <Button fx:id="dineInBtn" onAction="#setOrderType" prefWidth="80" styleClass="order-type-btn" text="Dine In" />
+                                          <Button fx:id="takeAwayBtn" onAction="#setOrderType" prefWidth="80" styleClass="order-type-btn" text="Take Away" />
+                                          <Button fx:id="deliveryBtn" onAction="#setOrderType" prefWidth="80" styleClass="order-type-btn" text="Delivery" />
+                                       </HBox>
+                                    </VBox>
+                                    
+                                    <VBox spacing="7">
+                                       <Label styleClass="sub-label" text="Items">
+                                          <font><Font name="Arial Bold" size="12.0" /></font>
+                                       </Label>
+                                       <ScrollPane fitToWidth="true" prefHeight="110" styleClass="items-scroll">
+                                          <VBox fx:id="orderItemsContainer" spacing="6" styleClass="order-items-container">
+                                             <Label alignment="CENTER" styleClass="empty-label" text="No items yet" />
+                                          </VBox>
+                                       </ScrollPane>
+                                    </VBox>
+                                    
+                                    <VBox spacing="7" styleClass="price-summary">
+                                       <HBox alignment="CENTER_LEFT">
+                                          <Label styleClass="order-label" text="Sub Total:" />
+                                          <Label fx:id="subTotalLabel" styleClass="order-value" text="0.00 EGP" HBox.hgrow="ALWAYS" />
+                                       </HBox>
+                                       <HBox alignment="CENTER_LEFT">
+                                          <Label styleClass="order-label" text="Tax (5%):" />
+                                          <Label fx:id="taxLabel" styleClass="order-value" text="0.00 EGP" HBox.hgrow="ALWAYS" />
+                                       </HBox>
+                                       <Line endX="240.0" stroke="#c8e6c9" strokeWidth="1.5" />
+                                       <HBox alignment="CENTER_LEFT">
+                                          <Label styleClass="total-label" text="Total:" />
+                                          <Label fx:id="totalLabel" styleClass="total-value" text="0.00 EGP" HBox.hgrow="ALWAYS" />
+                                       </HBox>
+                                    </VBox>
+                                    
+                                    <VBox spacing="7">
+                                       <Label styleClass="sub-label" text="Payment Method">
+                                          <font><Font name="Arial Bold" size="12.0" /></font>
+                                       </Label>
+                                       
+                                       <HBox alignment="CENTER" spacing="9">
+                                          <Button fx:id="cashBtn" onAction="#setPaymentMethod" prefHeight="44" prefWidth="72" styleClass="payment-btn">
+                                             <graphic>
+                                                <FontIcon iconColor="#27ae60" iconLiteral="fas-money-bill-wave" iconSize="22" />
+                                             </graphic>
+                                          </Button>
+                                          <Button fx:id="cardBtn" onAction="#setPaymentMethod" prefHeight="44" prefWidth="72" styleClass="payment-btn">
+                                             <graphic>
+                                                <FontIcon iconColor="#3498db" iconLiteral="far-credit-card" iconSize="22" />
+                                             </graphic>
+                                          </Button>
+                                          <Button fx:id="digitalBtn" onAction="#setPaymentMethod" prefHeight="44" prefWidth="72" styleClass="payment-btn">
+                                             <graphic>
+                                                <FontIcon iconColor="#9b59b6" iconLiteral="fab-paypal" iconSize="22" />
+                                             </graphic>
+                                          </Button>
+                                       </HBox>
+                                       
+                                       <HBox alignment="CENTER" spacing="26">
+                                          <Label styleClass="payment-label" text="Cash" />
+                                          <Label styleClass="payment-label" text="Card" />
+                                          <Label styleClass="payment-label" text="Digital" />
+                                       </HBox>
+                                    </VBox>
+                                    
+                                    <Button fx:id="placeOrderBtn" maxWidth="Infinity" onAction="#placeOrder" prefHeight="48" styleClass="place-order-btn" text="Place Order" />
+                                 </VBox>
+                              </VBox>
+                           </HBox>
+                        </children>
+                     </VBox>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

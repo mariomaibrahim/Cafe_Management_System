@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<StackPane stylesheets="@logindesign.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aitpcafe.LoginController">
+    
+    <AnchorPane prefHeight="650.0" prefWidth="1100.0" styleClass="main-container">
+        
+        <AnchorPane fx:id="side_form" layoutX="0" layoutY="0" prefHeight="760.0" prefWidth="592.0" styleClass="side-panel">
+            
+            <Circle layoutX="100" layoutY="100" radius="80" styleClass="decorative-circle-1" />
+            <Circle layoutX="450" layoutY="200" radius="120" styleClass="decorative-circle-2" />
+            <Circle layoutX="80" layoutY="550" radius="60" styleClass="decorative-circle-3" />
+            <Circle layoutX="500" layoutY="600" radius="90" styleClass="decorative-circle-4" />
+            
+            <VBox alignment="CENTER" layoutX="75" layoutY="200" prefWidth="400" spacing="30">
+                
+                <StackPane>
+                    <Circle radius="70" styleClass="logo-circle" />
+                    <FontIcon iconColor="white" iconLiteral="fas-coffee" iconSize="60" />
+                </StackPane>
+                
+                <VBox alignment="CENTER" spacing="15">
+                    <Label styleClass="welcome-title" text=" CAFE MANAGEMENT">
+                        <graphic>
+                            <FontIcon iconColor="white" iconLiteral="fas-utensils" iconSize="24" />
+                        </graphic>
+                    </Label>
+                    <Line endX="100" startX="-100" styleClass="divider-line" />
+                    <Label styleClass="welcome-subtitle" text="Welcome Back!" />
+                    <Label styleClass="welcome-text" text="Your perfect café experience starts here" />
+                </VBox>
+                
+            </VBox>
+            
+        </AnchorPane>
+
+        <AnchorPane fx:id="si_loginform" layoutX="591.0" layoutY="0" prefHeight="760.0" prefWidth="572.0" styleClass="form-panel" visible="false">
+            
+            <Circle layoutX="480" layoutY="50" radius="40" styleClass="form-circle-1" />
+            <Circle layoutX="520" layoutY="600" radius="50" styleClass="form-circle-2" />
+            
+            <VBox alignment="CENTER" layoutX="100" layoutY="150" prefWidth="350" spacing="35">
+                
+                <VBox alignment="CENTER" spacing="15">
+                    <StackPane>
+                        <Circle radius="35" styleClass="icon-circle" />
+                        <FontIcon iconColor="#4a8527" iconLiteral="fas-user-circle" iconSize="40" />
+                    </StackPane>
+                    <Label styleClass="form-title" text="SIGN IN" />
+                    <Label styleClass="form-subtitle" text="Enter your credentials to continue" />
+                </VBox>
+
+                <VBox prefWidth="350" spacing="25">
+                    
+                    <VBox spacing="10">
+                        <Label styleClass="field-label" text="Username" />
+                        <HBox spacing="12" styleClass="input-container">
+                            <StackPane styleClass="icon-wrapper">
+                                <FontIcon iconColor="#4a8527" iconLiteral="fas-user" iconSize="18" />
+                            </StackPane>
+                            <TextField fx:id="si_username" promptText="Enter your username" styleClass="input-field" />
+                        </HBox>
+                    </VBox>
+
+                    <VBox spacing="10">
+                        <Label styleClass="field-label" text="Password" />
+                        <HBox spacing="12" styleClass="input-container">
+                            <StackPane styleClass="icon-wrapper">
+                                <FontIcon iconColor="#4a8527" iconLiteral="fas-lock" iconSize="18" />
+                            </StackPane>
+                            <PasswordField fx:id="si_password" promptText="Enter your password" styleClass="input-field" />
+                        </HBox>
+                    </VBox>
+
+                    <HBox alignment="CENTER_RIGHT">
+                        <Hyperlink fx:id="si_forgotpass" onAction="#forgotPassBtn" styleClass="forgot-link">
+                            <graphic>
+                                <FontIcon iconColor="#4a8527" iconLiteral="fas-question-circle" iconSize="12" />
+                            </graphic>
+                            <text> Forgot Password?</text>
+                        </Hyperlink>
+                    </HBox>
+
+                       <Button fx:id="si_loginbtn" onAction="#loginBtn" prefHeight="50" prefWidth="350" styleClass="login-button">
+                        <graphic>
+                            <HBox alignment="CENTER" spacing="10">
+                                <Label styleClass="button-text" text="LOGIN" />
+                                <FontIcon iconColor="white" iconLiteral="fas-arrow-right" iconSize="16" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    
+                </VBox>
+
+            </VBox>
+        </AnchorPane>
+
+        <AnchorPane fx:id="fp_forgotpassform" layoutX="591.0" layoutY="-31.0" prefHeight="790.0" prefWidth="572.0" styleClass="form-panel">
+            
+            <Circle layoutX="480.0" layoutY="50.0" radius="40" styleClass="form-circle-1" />
+            <Circle layoutX="520" layoutY="600" radius="50" styleClass="form-circle-2" />
+            
+            <VBox alignment="CENTER" layoutX="100" layoutY="100" prefWidth="350" spacing="25">
+                
+                <VBox alignment="CENTER" spacing="15">
+                    <StackPane>
+                        <Circle radius="35" styleClass="icon-circle-reset" />
+                        <FontIcon iconLiteral="fas-key" iconSize="35">
+                     <iconColor>
+                        <LinearGradient startX="0.12121213746793336" startY="0.7840909199281173">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.4575490653514862" green="0.9368420839309692" blue="0.15961013734340668" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </iconColor></FontIcon>
+                    </StackPane>
+                    <Label styleClass="form-title" text="RESET PASSWORD" />
+                    <Label styleClass="form-subtitle" text="Fill in the details to reset your password" />
+                </VBox>
+
+                <VBox prefWidth="350" spacing="20">
+                    
+                    <VBox spacing="8">
+                        <Label styleClass="field-label-fp" text="Username" />
+                        <HBox spacing="12" styleClass="input-container-fp">
+                            <StackPane styleClass="icon-wrapper-fp">
+                                <FontIcon iconColor="#4a8527" iconLiteral="fas-user" iconSize="16" />
+                            </StackPane>
+                            <TextField fx:id="fp_username" promptText="Enter username" styleClass="input-field-fp" />
+                        </HBox>
+                    </VBox>
+
+                    <VBox spacing="8">
+                        <Label styleClass="field-label-fp" text="Security Question" />
+                        <HBox spacing="12" styleClass="input-container-fp">
+                            <StackPane styleClass="icon-wrapper-fp">
+                                <FontIcon iconColor="#4a8527" iconLiteral="fas-question" iconSize="16" />
+                            </StackPane>
+                            <ComboBox fx:id="fp_question" prefWidth="290" promptText="Select a question" styleClass="combo-field" />
+                        </HBox>
+                    </VBox>
+
+                    <VBox spacing="8">
+                        <Label styleClass="field-label-fp" text="Answer" />
+                        <HBox spacing="12" styleClass="input-container-fp">
+                            <StackPane styleClass="icon-wrapper-fp">
+                                <FontIcon iconColor="#4a8527" iconLiteral="fas-comment" iconSize="16" />
+                            </StackPane>
+                            <TextField fx:id="fp_answer" promptText="Your answer" styleClass="input-field-fp" />
+                        </HBox>
+                    </VBox>
+
+                    <VBox spacing="8">
+                        <Label styleClass="field-label-fp" text="New Password" />
+                        <HBox spacing="12" styleClass="input-container-fp">
+                            <StackPane styleClass="icon-wrapper-fp">
+                                <FontIcon iconColor="#4a8527" iconLiteral="fas-lock" iconSize="16" />
+                            </StackPane>
+                            <PasswordField fx:id="fp_newpassword" promptText="Enter new password" styleClass="input-field-fp" />
+                        </HBox>
+                    </VBox>
+
+                    <HBox alignment="CENTER" spacing="15">
+                        <Button fx:id="fp_backbtn" onAction="#backToLoginBtn" prefHeight="45" prefWidth="165" styleClass="back-button">
+                            <graphic>
+                                <HBox alignment="CENTER" spacing="8">
+                                    <FontIcon iconColor="#4a8527" iconLiteral="fas-arrow-left" iconSize="14" />
+                                    <Label styleClass="back-button-text" text="BACK" />
+                                </HBox>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="fp_proceedbtn" onAction="#proceedBtn" prefHeight="45" prefWidth="165" styleClass="proceed-button">
+                            <graphic>
+                                <HBox alignment="CENTER" spacing="8">
+                                    <Label styleClass="proceed-button-text" text="PROCEED" />
+                                    <FontIcon iconColor="white" iconLiteral="fas-check" iconSize="14" />
+                                </HBox>
+                            </graphic>
+                        </Button>
+                    </HBox>
+                    
+                </VBox>
+
+            </VBox>
+         <Circle layoutX="41.0" layoutY="471.0" radius="40" styleClass="form-circle-1" />
+        </AnchorPane>
+
+    </AnchorPane>
+
+</StackPane>

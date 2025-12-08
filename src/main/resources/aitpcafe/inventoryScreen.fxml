@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" stylesheets="@inventoryScreenDesign.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aitpcafe.InventoryController">
+   <children>
+      <AnchorPane fx:id="mainContainer" prefHeight="650.0" prefWidth="1100.0" styleClass="root">
+         <children>
+            <AnchorPane fx:id="inventory_form" layoutX="220.0" prefHeight="650.0" prefWidth="880.0" styleClass="white-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ScrollPane fitToWidth="true" styleClass="scroll-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <VBox spacing="18" style="-fx-padding: 25;">
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                           <FontIcon iconColor="#27ae60" iconLiteral="fas-box" iconSize="28" />
+                           <Label styleClass="header-label" text="Inventory Management">
+                              <font><Font name="Arial Bold" size="26.0" /></font>
+                           </Label>
+                        </HBox>
+                        
+                        <VBox spacing="14" styleClass="container-card">
+                           <HBox alignment="CENTER_LEFT" spacing="10">
+                              <FontIcon iconColor="#27ae60" iconLiteral="fas-list" iconSize="20" />
+                              <Label styleClass="section-title" text="Product List">
+                                 <font><Font name="Arial Bold" size="17.0" /></font>
+                              </Label>
+                           </HBox>
+                           
+                           <TableView fx:id="inventory_table" prefHeight="220.0" styleClass="table-view">
+                              <columns>
+                                 <TableColumn fx:id="inventory_col_ID" prefWidth="100.0" text="Product ID" />
+                                 <TableColumn fx:id="inventory_col_productName" prefWidth="150.0" text="Product Name" />
+                                 <TableColumn fx:id="inventory_col_type" prefWidth="100.0" text="Type" />
+                                 <TableColumn fx:id="inventory_col_stock" prefWidth="90.0" text="Stock" />
+                                 <TableColumn fx:id="inventory_col_price" prefWidth="110.0" text="Price" />
+                                 <TableColumn fx:id="inventory_col_status" prefWidth="130.0" text="Status" />
+                                 <TableColumn fx:id="inventory_col_date" prefWidth="130.0" text="Date" />
+                              </columns>
+                           </TableView>
+                        </VBox>
+                        
+                        <VBox spacing="14" styleClass="container-card">
+                           <HBox alignment="CENTER_LEFT" spacing="10">
+                              <FontIcon iconColor="#27ae60" iconLiteral="fas-edit" iconSize="20" />
+                              <Label styleClass="section-title" text="Product Information">
+                                 <font><Font name="Arial Bold" size="17.0" /></font>
+                              </Label>
+                           </HBox>
+                           
+                           <GridPane hgap="14" vgap="14">
+                              <columnConstraints>
+                                 <ColumnConstraints />
+                                 <ColumnConstraints />
+                                 <ColumnConstraints />
+                                 <ColumnConstraints />
+                              </columnConstraints>
+                              <rowConstraints>
+                                 <RowConstraints />
+                                 <RowConstraints />
+                              </rowConstraints>
+                              <children>
+                                 <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                    <Label styleClass="form-label" text="Product ID *" />
+                                    <TextField fx:id="inventory_productID" prefWidth="190" promptText="Enter product ID" styleClass="text-field" />
+                                 </VBox>
+                                 
+                                 <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                    <Label styleClass="form-label" text="Product Name *" />
+                                    <TextField fx:id="inventory_productName" prefWidth="190" promptText="Enter product name" styleClass="text-field" />
+                                 </VBox>
+                                 
+                                 <VBox spacing="6" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                                    <Label styleClass="form-label" text="Type *" />
+                                    <ComboBox fx:id="inventory_type" prefWidth="190" promptText="Choose type" styleClass="combo-box" />
+                                 </VBox>
+                                 
+                                 <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                    <Label styleClass="form-label" text="Stock *" />
+                                    <TextField fx:id="inventory_stock" prefWidth="190" promptText="0" styleClass="text-field" />
+                                 </VBox>
+                                 
+                                 <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <Label styleClass="form-label" text="Price (EGP) *" />
+                                    <TextField fx:id="inventory_price" prefWidth="190" promptText="0.00" styleClass="text-field" />
+                                 </VBox>
+                                 
+                                 <VBox spacing="6" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                    <Label styleClass="form-label" text="Status *" />
+                                    <ComboBox fx:id="inventory_status" prefWidth="190" promptText="Choose status" styleClass="combo-box" />
+                                 </VBox>
+                                 
+                                 <VBox spacing="6" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.rowSpan="2">
+                                    <Label styleClass="form-label" text="Product Image" />
+                                    <VBox alignment="CENTER" spacing="10" styleClass="image-container">
+                                       <ImageView fx:id="inventory_image" fitHeight="130" fitWidth="130" pickOnBounds="true" preserveRatio="true" styleClass="product-image" />
+                                       <Button fx:id="inventory_importBtn" onAction="#inventoryImportBtn" styleClass="import-btn" text="Import Image">
+                                          <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-upload" iconSize="12" /></graphic>
+                                       </Button>
+                                    </VBox>
+                                 </VBox>
+                              </children>
+                           </GridPane>
+                           
+                           <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10 0 0 0;">
+                              <Button fx:id="inventory_addBtn" onAction="#addProduct" prefWidth="110" styleClass="add-btn" text="Add">
+                                 <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-plus" iconSize="12" /></graphic>
+                              </Button>
+                              <Button fx:id="inventory_updateBtn" onAction="#updateProduct" prefWidth="110" styleClass="update-btn" text="Update">
+                                 <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-edit" iconSize="12" /></graphic>
+                              </Button>
+                              <Button fx:id="inventory_deleteBtn" onAction="#deleteProduct" prefWidth="110" styleClass="delete-btn" text="Delete">
+                                 <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-trash" iconSize="12" /></graphic>
+                              </Button>
+                              <Button fx:id="inventory_clearBtn" onAction="#clearFields" prefWidth="110" styleClass="clear-btn" text="Clear">
+                                 <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-times" iconSize="12" /></graphic>
+                              </Button>
+                           </HBox>
+                        </VBox>
+                     </VBox>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

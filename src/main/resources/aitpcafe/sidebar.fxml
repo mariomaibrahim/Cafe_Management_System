@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane fx:id="sidebar" prefHeight="650.0" prefWidth="220.0" styleClass="nav-form" stylesheets="@sidebar.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aitpcafe.SidebarController">
+    <children>
+        <VBox fx:id="logoSection" layoutX="10.0" layoutY="60.0" spacing="10" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
+            <HBox alignment="CENTER" spacing="10">
+                <FontIcon fx:id="coffeeIcon" iconColor="WHITE" iconLiteral="fas-coffee" iconSize="58" />
+            </HBox>
+            <Label fx:id="titleLabel" alignment="CENTER" prefWidth="200" text="Cafe System" textAlignment="CENTER" textFill="WHITE">
+                <font><Font name="Arial Bold" size="19.0" /></font>
+            </Label>
+            <Label fx:id="subtitleLabel" alignment="CENTER" prefWidth="200" text="Management" textAlignment="CENTER" textFill="rgba(255,255,255,0.88)">
+                <font><Font name="Arial" size="12.5" /></font>
+            </Label>
+        </VBox>
+        
+        <Button fx:id="toggleSidebar" layoutX="168.0" layoutY="14.0" onAction="#toggleSidebar" styleClass="toggle-btn" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
+        
+        <VBox fx:id="navButtonsContainer" spacing="9" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="230.0" />
+        
+        <Button fx:id="logoutBtn" prefWidth="192.0" styleClass="nav-btn" text="  Logout" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
+            <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-sign-out-alt" iconSize="15" /></graphic>
+        </Button>
+    </children>
+</AnchorPane>
