@@ -49,7 +49,7 @@ Revenue tracking • Sales analytics • Staff performance metrics • Custom re
 
 <table>
 <tr>
-<td width="80%">
+<td width="40%">
 
 **Backend**
 -  Java 11+ - Core application logic
@@ -58,7 +58,7 @@ Revenue tracking • Sales analytics • Staff performance metrics • Custom re
 -  MySQL Connector 8.0.33 - JDBC driver
 
 </td>
-<td width="80%">
+<td width="40%">
 
 **Frontend**
 -  JavaFX 17+ - Rich desktop UI
