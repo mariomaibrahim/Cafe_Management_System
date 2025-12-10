@@ -44,6 +44,27 @@ Multiple payment methods • Invoice generation • Receipt printing • Transac
 Revenue tracking • Sales analytics • Staff performance metrics • Custom report generation
 
 ---
+## 📸 Screenshots
+
+<div align="center">
+
+### 🔑 Login Screen
+<img src="/Screens/login.png" width="100%" alt="Login Screen"/>
+
+
+### 🛒 Order Management
+<img src="/Screens/menu.png" width="100%" alt="Order Management"/>
+
+### 📦 Inventory Management
+<img src="/Screens/inventory.png" width="100%" alt="Inventory Management"/>
+
+### 📊 Dashboard
+<img src="/Screens/dashboard.png" width="100%" alt="Dashboard"/>
+
+</div>
+
+
+---
 
 ## 🛠 Tech Stack
 
@@ -97,23 +118,7 @@ mysql -u root -p -e "CREATE DATABASE cafe_management;"
 mysql -u root -p cafe_management < database/schema.sql
 ```
 
-## 📸 Screenshots
 
-<div align="center">
-
-### 🔑 Login Screen
-<img src="/Screens/login.png" width="100%" alt="Login Screen"/>
-
-
-### 🛒 Order Management
-<img src="/Screens/menu.png" width="100%" alt="Order Management"/>
-
-### 📦 Inventory Management
-<img src="/Screens/inventory.png" width="100%" alt="Inventory Management"/>
-### 📊 Dashboard
-<img src="/Screens/dashboard.png" width="100%" alt="Dashboard"/>
-
-</div>
 
 ---
 
