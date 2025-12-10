@@ -49,7 +49,7 @@ Revenue tracking • Sales analytics • Staff performance metrics • Custom re
 
 <table>
 <tr>
-<td width="40%">
+<td width="50%">
 
 **Backend**
 -  Java 11+ - Core application logic
@@ -58,7 +58,7 @@ Revenue tracking • Sales analytics • Staff performance metrics • Custom re
 -  MySQL Connector 8.0.33 - JDBC driver
 
 </td>
-<td width="40%">
+<td width="50%">
 
 **Frontend**
 -  JavaFX 17+ - Rich desktop UI
@@ -102,16 +102,16 @@ mysql -u root -p cafe_management < database/schema.sql
 <div align="center">
 
 ### 🔑 Login Screen
-<img src="path/to/login-screenshot.png" width="100%" alt="Login Screen"/>
+<img src="/Screens/login.png" width="100%" alt="Login Screen"/>
 
-### 📊 Dashboard
-<img src="path/to/dashboard-screenshot.png" width="100%" alt="Dashboard"/>
 
 ### 🛒 Order Management
-<img src="path/to/order-screenshot.png" width="100%" alt="Order Management"/>
+<img src="/Screens/menu.png" width="100%" alt="Order Management"/>
 
 ### 📦 Inventory Management
-<img src="path/to/inventory-screenshot.png" width="100%" alt="Inventory Management"/>
+<img src="/Screens/inventory.png" width="100%" alt="Inventory Management"/>
+### 📊 Dashboard
+<img src="/Screens/dashboard.png" width="100%" alt="Dashboard"/>
 
 </div>
 
