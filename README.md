@@ -97,18 +97,6 @@ mysql -u root -p -e "CREATE DATABASE cafe_management;"
 mysql -u root -p cafe_management < database/schema.sql
 ```
 
-**3. Configure Database Connection**
-
-Edit `config.properties` file:
-```properties
-db.url=jdbc:mysql://localhost:3306/cafe_management
-db.username=your_username
-db.password=your_password
-```
-
-
----
-
 ## 📸 Screenshots
 
 <div align="center">
