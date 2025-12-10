@@ -1,3 +1,9 @@
+/* ======================================== */
+/*  Created by : Mariam Ibrahim 
+    Start    : 11/18                  
+    Page     : Card Product                 */
+/* ======================================== */
+
 /* Root Variables */
 :root {
     -fx-primary-green: #27ae60;
@@ -12,7 +18,7 @@
 }
 
 /* ========================================
-   CARD CONTAINER
+   CARD CONTAINER (WITHOUT SHADOW OR MOVEMENT)
    ======================================== */
 .Card {
     -fx-background-color: -fx-bg-white;
@@ -20,13 +26,22 @@
     -fx-border-color: #dde1e6;
     -fx-border-width: 2;
     -fx-border-radius: 15px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 15, 0, 0, 3);
+    -fx-effect: none;          
+    -fx-translate-y: 0;      
+    -fx-scale-x: 1;            
+    -fx-scale-y: 1;  
+    -fx-pref-width: 170;
+    -fx-pref-height: 220;
+    -fx-padding: 2;
 }
 
 .Card:hover {
-    -fx-border-color: -fx-primary-green;
-    -fx-effect: dropshadow(gaussian, rgba(39, 174, 96, 0.25), 20, 0, 0, 5);
-    -fx-translate-y: -3;
+    -fx-border-color: #dde1e6; 
+    -fx-effect: none;          
+    -fx-translate-y: 0;       
+    -fx-scale-x: 1;            
+    -fx-scale-y: 1;           
+    -fx-background-color: -fx-bg-white;
 }
 
 /* ========================================
@@ -36,12 +51,13 @@
     -fx-background-color: #f0f4f8;
     -fx-background-radius: 12px;
     -fx-border-radius: 12px;
-    -fx-border-color: #e2e8f0;
-    -fx-border-width: 1;
+    
 }
 
 #productimage {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 8, 0, 0, 2);
+    -fx-fit-width: 110;
+    -fx-fit-height: 110;
 }
 
 /* ========================================
@@ -50,7 +66,7 @@
 #productName {
     -fx-text-fill: #1a202c;
     -fx-font-family: "Segoe UI Semibold", "Arial", sans-serif;
-    -fx-font-size: 15px;
+    -fx-font-size: 13px;
     -fx-font-weight: 700;
     -fx-wrap-text: true;
     -fx-text-overrun: ellipsis;
@@ -61,9 +77,9 @@
    ======================================== */
 #productPrice,
 .price-label {
-    -fx-text-fill: #27ae60;
+    -fx-text-fill: #2a777c;
     -fx-font-family: "Segoe UI Bold", "Arial", sans-serif;
-    -fx-font-size: 17px;
+    -fx-font-size: 15px;
     -fx-font-weight: 900;
 }
 
@@ -75,26 +91,22 @@
     -fx-background-color: -fx-primary-green;
     -fx-text-fill: white;
     -fx-font-family: "Segoe UI Bold", "Arial", sans-serif;
-    -fx-font-size: 14px;
+    -fx-font-size: 12px;
     -fx-font-weight: 900;
     -fx-background-radius: 10px;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(39, 174, 96, 0.4), 12, 0, 0, 3);
+    -fx-pref-width: 80px;
+    -fx-pref-height: 28px;
 }
 
 #productBtn:hover,
 .add-btn:hover {
     -fx-background-color: -fx-primary-light;
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-    -fx-effect: dropshadow(gaussian, rgba(39, 174, 96, 0.5), 15, 0, 0, 4);
 }
 
 #productBtn:pressed,
 .add-btn:pressed {
     -fx-background-color: -fx-primary-dark;
-    -fx-scale-x: 0.98;
-    -fx-scale-y: 0.98;
 }
 
 #productBtn:disabled,
@@ -106,56 +118,101 @@
 }
 
 /* ========================================
-   SPINNER
+   SPINNER - تصميم محسن وثابت ✨
    ======================================== */
 #productScroll,
 .quantity-spinner {
-    -fx-background-color: white;
-    -fx-border-color: #cbd5e0;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #2A777C;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
-    -fx-border-width: 2;
+    -fx-border-width: 1.5px;
+    -fx-pref-width: 60px;
+    -fx-pref-height: 28px;
+    -fx-max-width: 60px;
+    -fx-max-height: 28px;
 }
 
+#productScroll:focused,
+.quantity-spinner:focused {
+    -fx-border-color: #2A777C;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, rgba(39, 174, 96, 0.2), 5, 0, 0, 0);
+}
+
+/* Text Field داخل الـ Spinner */
 #productScroll .text-field,
 .quantity-spinner .text-field {
-    -fx-background-color: white;
+    -fx-background-color: transparent;
     -fx-text-fill: #1a202c;
-    -fx-font-size: 14px;
-    -fx-font-weight: 700;
-    -fx-background-radius: 7px;
-    -fx-border-radius: 7px;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
     -fx-alignment: center;
+    -fx-padding: 0;
 }
 
+#productScroll .text-field:focused,
+.quantity-spinner .text-field:focused {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* أزرار الزيادة والنقصان */
 #productScroll .increment-arrow-button,
 #productScroll .decrement-arrow-button,
 .quantity-spinner .increment-arrow-button,
 .quantity-spinner .decrement-arrow-button {
-    -fx-background-color: #e2e8f0;
-    -fx-background-radius: 6px;
+    -fx-background-color: #f0f4f8;
+    -fx-background-radius: 5px;
     -fx-cursor: hand;
+    -fx-padding: 2px 5px;
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
 }
 
 #productScroll .increment-arrow-button:hover,
 #productScroll .decrement-arrow-button:hover,
 .quantity-spinner .increment-arrow-button:hover,
 .quantity-spinner .decrement-arrow-button:hover {
-    -fx-background-color: -fx-green-pale;
+    -fx-background-color: #D3E4E7;
 }
 
-#productScroll .increment-arrow-button .increment-arrow,
-#productScroll .decrement-arrow-button .decrement-arrow,
-.quantity-spinner .increment-arrow-button .increment-arrow,
-.quantity-spinner .decrement-arrow-button .decrement-arrow {
-    -fx-background-color: #4a5568;
+#productScroll .increment-arrow-button:pressed,
+#productScroll .decrement-arrow-button:pressed,
+.quantity-spinner .increment-arrow-button:pressed,
+.quantity-spinner .decrement-arrow-button:pressed {
+    -fx-background-color: #82ACAB;
+}
+
+/* الأسهم */
+#productScroll .increment-arrow,
+#productScroll .decrement-arrow,
+.quantity-spinner .increment-arrow,
+.quantity-spinner .decrement-arrow {
+    -fx-background-color: #82ACAB;
+    -fx-padding: 2px;
+    -fx-scale-x: 0.7;
+    -fx-scale-y: 0.7;
 }
 
 #productScroll .increment-arrow-button:hover .increment-arrow,
 #productScroll .decrement-arrow-button:hover .decrement-arrow,
 .quantity-spinner .increment-arrow-button:hover .increment-arrow,
 .quantity-spinner .decrement-arrow-button:hover .decrement-arrow {
-    -fx-background-color: -fx-primary-green;
+    -fx-background-color: #D3E4E7;
+}
+
+/* إخفاء الخطوط الفاصلة */
+#productScroll .spinner-button-cell,
+.quantity-spinner .spinner-button-cell {
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
 }
 
 /* ========================================

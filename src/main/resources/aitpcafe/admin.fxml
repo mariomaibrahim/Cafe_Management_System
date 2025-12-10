@@ -15,6 +15,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
@@ -22,65 +25,80 @@
     <children>
         <AnchorPane fx:id="mainContainer" prefHeight="650.0" prefWidth="1100.0" styleClass="root">
             <children>
-                <AnchorPane fx:id="dashboard_form" layoutX="220.0" prefHeight="650.0" prefWidth="880.0" styleClass="white-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <!-- Dashboard Form -->
+                <AnchorPane fx:id="dashboard_form" layoutX="220.0" prefHeight="650.0" prefWidth="880.0" style="-fx-background-color: ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
                         <ScrollPane fitToWidth="true" styleClass="scroll-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <VBox spacing="22" style="-fx-padding: 25;">
-                                <HBox alignment="CENTER_LEFT" spacing="12">
-                                    <FontIcon iconColor="#27ae60" iconLiteral="fas-chart-line" iconSize="28" />
+                            <VBox spacing="20" style="-fx-padding: 25;">
+                                <!-- Header -->
+                                <HBox alignment="CENTER_LEFT" spacing="15">
                                     <Label styleClass="header-label" text="Dashboard Overview">
-                                        <font><Font name="Arial Bold" size="26.0" /></font>
+                                        <font><Font name="Arial Bold" size="24.0" /></font>
                                     </Label>
                                 </HBox>
                                 
-                                <VBox spacing="18" styleClass="container-card">
-                                    <Label styleClass="section-title" text="Quick Statistics">
-                                        <font><Font name="Arial Bold" size="17.0" /></font>
+                                <!-- Today Statistics Cards -->
+                                <VBox spacing="12">
+                                    <Label styleClass="section-title" text="Today Statistics">
+                                        <font><Font name="Arial Bold" size="16.0" /></font>
                                     </Label>
-                                    
-                                    <GridPane hgap="18" vgap="18">
-                                        <VBox prefHeight="115.0" prefWidth="235.0" spacing="12" styleClass="stat-card-green" GridPane.columnIndex="0">
-                                            <HBox alignment="CENTER_LEFT" spacing="12">
-                                                <FontIcon iconColor="WHITE" iconLiteral="fas-users" iconSize="38" />
-                                                <VBox spacing="4">
-                                                    <Label styleClass="stat-label" text="TOTAL CASHIERS">
-                                                        <font><Font size="12.0" /></font>
-                                                    </Label>
-                                                    <Label fx:id="totalCashiers" styleClass="stat-value" text="0">
-                                                        <font><Font name="Arial Bold" size="30.0" /></font>
-                                                    </Label>
-                                                </VBox>
-                                            </HBox>
-                                        </VBox>
+                                    <GridPane hgap="16" vgap="16">
+                                        <AnchorPane prefHeight="95.0" prefWidth="250.0" GridPane.columnIndex="0">
+                                            <FontIcon iconLiteral="fas-users" iconSize="32" layoutX="16.0" layoutY="45.0">
+                                                <iconColor>
+                                                    <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                                        <stops>
+                                                            <Stop><color><Color red="0.16470588743686676" green="0.46666666865348816" blue="0.48627451062202454" /></color></Stop>
+                                                            <Stop offset="1.0"><color><Color red="0.04313725605607033" green="0.29411765933036804" blue="0.3294117748737335" /></color></Stop>
+                                                        </stops>
+                                                    </RadialGradient>
+                                                </iconColor>
+                                            </FontIcon>
+                                            <Label layoutX="65.0" layoutY="16.0" styleClass="stat-label" text="TOTAL CASHIERS">
+                                                <font><Font size="13.0" /></font>
+                                            </Label>
+                                            <Label fx:id="totalCashiers" layoutX="65.0" layoutY="40.0" styleClass="stat-value" text="0">
+                                                <font><Font name="Arial Bold" size="28.0" /></font>
+                                            </Label>
+                                        </AnchorPane>
                                         
-                                        <VBox prefHeight="115.0" prefWidth="235.0" spacing="12" styleClass="stat-card-blue" GridPane.columnIndex="1">
-                                            <HBox alignment="CENTER_LEFT" spacing="12">
-                                                <FontIcon iconColor="WHITE" iconLiteral="fas-shopping-cart" iconSize="38" />
-                                                <VBox spacing="4">
-                                                    <Label styleClass="stat-label" text="TODAY ORDERS">
-                                                        <font><Font size="12.0" /></font>
-                                                    </Label>
-                                                    <Label fx:id="todayOrders" styleClass="stat-value" text="0">
-                                                        <font><Font name="Arial Bold" size="30.0" /></font>
-                                                    </Label>
-                                                </VBox>
-                                            </HBox>
-                                        </VBox>
+                                        <AnchorPane prefHeight="95.0" prefWidth="250.0" GridPane.columnIndex="1">
+                                            <FontIcon iconLiteral="fas-shopping-cart" iconSize="32" layoutX="16.0" layoutY="45.0">
+                                                <iconColor>
+                                                    <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                                        <stops>
+                                                            <Stop><color><Color red="0.16470588743686676" green="0.46666666865348816" blue="0.48627451062202454" /></color></Stop>
+                                                            <Stop offset="1.0"><color><Color red="0.04313725605607033" green="0.29411765933036804" blue="0.3294117748737335" /></color></Stop>
+                                                        </stops>
+                                                    </RadialGradient>
+                                                </iconColor>
+                                            </FontIcon>
+                                            <Label layoutX="65.0" layoutY="16.0" styleClass="stat-label" text="TODAY ORDERS">
+                                                <font><Font size="13.0" /></font>
+                                            </Label>
+                                            <Label fx:id="todayOrders" layoutX="65.0" layoutY="40.0" styleClass="stat-value" text="0">
+                                                <font><Font name="Arial Bold" size="28.0" /></font>
+                                            </Label>
+                                        </AnchorPane>
                                         
-                                        <VBox prefHeight="115.0" prefWidth="235.0" spacing="12" styleClass="stat-card-orange" GridPane.columnIndex="2">
-                                            <HBox alignment="CENTER_LEFT" spacing="12">
-                                                <FontIcon iconColor="WHITE" iconLiteral="fas-dollar-sign" iconSize="38" />
-                                                <VBox spacing="4">
-                                                    <Label styleClass="stat-label" text="TODAY REVENUE">
-                                                        <font><Font size="12.0" /></font>
-                                                    </Label>
-                                                    <Label fx:id="todayRevenue" styleClass="stat-value" text="0.00">
-                                                        <font><Font name="Arial Bold" size="26.0" /></font>
-                                                    </Label>
-                                                </VBox>
-                                            </HBox>
-                                        </VBox>
-                                        
+                                        <AnchorPane prefHeight="95.0" prefWidth="250.0" GridPane.columnIndex="2">
+                                            <FontIcon iconLiteral="fas-money-bill" iconSize="32" layoutX="16.0" layoutY="45.0">
+                                                <iconColor>
+                                                    <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                                        <stops>
+                                                            <Stop><color><Color red="0.16470588743686676" green="0.46666666865348816" blue="0.48627451062202454" /></color></Stop>
+                                                            <Stop offset="1.0"><color><Color red="0.04313725605607033" green="0.29411765933036804" blue="0.3294117748737335" /></color></Stop>
+                                                        </stops>
+                                                    </RadialGradient>
+                                                </iconColor>
+                                            </FontIcon>
+                                            <Label layoutX="65.0" layoutY="16.0" styleClass="stat-label" text="TODAY REVENUE">
+                                                <font><Font size="13.0" /></font>
+                                            </Label>
+                                            <Label fx:id="todayRevenue" layoutX="65.0" layoutY="40.0" styleClass="stat-value" text="0.00 EGP">
+                                                <font><Font name="Arial Bold" size="24.0" /></font>
+                                            </Label>
+                                        </AnchorPane>
                                         <columnConstraints>
                                             <ColumnConstraints />
                                             <ColumnConstraints />
@@ -92,50 +110,110 @@
                                     </GridPane>
                                 </VBox>
                                 
-                                <VBox spacing="14" styleClass="container-card">
+                                <!-- Detailed Statistics -->
+                                <VBox spacing="12">
+                                    <Label styleClass="section-title" text="Detailed Statistics">
+                                        <font><Font name="Arial Bold" size="16.0" /></font>
+                                    </Label>
+                                    
+                                    <GridPane hgap="16" vgap="16">
+                                        <VBox styleClass="mini-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                            <Label styleClass="mini-label" text="TOTAL ORDERS" />
+                                            <Label fx:id="totalOrders" styleClass="mini-value" text="0" />
+                                        </VBox>
+                                        <VBox styleClass="mini-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                            <Label styleClass="mini-label" text="TOTAL REVENUE" />
+                                            <Label fx:id="totalRevenue" styleClass="mini-value" text="0.00 EGP" />
+                                        </VBox>
+                                        <VBox styleClass="mini-card" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                                            <Label styleClass="mini-label" text="TOTAL CUSTOMERS" />
+                                            <Label fx:id="totalCustomers" styleClass="mini-value" text="0" />
+                                        </VBox>
+                                        
+                                        <VBox styleClass="mini-card" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                            <Label styleClass="mini-label" text="WEEK ORDERS" />
+                                            <Label fx:id="weekOrders" styleClass="mini-value" text="0" />
+                                        </VBox>
+                                        <VBox styleClass="mini-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <Label styleClass="mini-label" text="WEEK REVENUE" />
+                                            <Label fx:id="weekRevenue" styleClass="mini-value" text="0.00 EGP" />
+                                        </VBox>
+                                        <VBox styleClass="mini-card" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                            <Label styleClass="mini-label" text="MONTH ORDERS" />
+                                            <Label fx:id="monthOrders" styleClass="mini-value" text="0" />
+                                        </VBox>
+                                        
+                                        <columnConstraints>
+                                            <ColumnConstraints />
+                                            <ColumnConstraints />
+                                            <ColumnConstraints />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints />
+                                            <RowConstraints />
+                                        </rowConstraints>
+                                    </GridPane>
+                                </VBox>
+                                
+                                <!-- Quick Actions -->
+                                <VBox spacing="12">
                                     <Label styleClass="section-title" text="Quick Actions">
-                                        <font><Font name="Arial Bold" size="17.0" /></font>
+                                        <font><Font name="Arial Bold" size="16.0" /></font>
                                     </Label>
                                     <HBox spacing="12">
                                         <Button fx:id="toggleEmployeeBtn" onAction="#toggleEmployeeForm" styleClass="action-btn" text="Manage Employees">
                                             <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-user-cog" iconSize="14" /></graphic>
                                         </Button>
-                                        <Button onAction="#showCustomerReports" styleClass="action-btn-secondary" text="Customer Reports">
-                                            <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-file-alt" iconSize="14" /></graphic>
-                                        </Button>
-                                        <Button onAction="#editAdminProfile" styleClass="action-btn-edit" text="Edit Profile">
+                                        <Button onAction="#editAdminProfile" styleClass="action-btn-secondary" text="Edit Profile">
                                             <graphic><FontIcon iconColor="WHITE" iconLiteral="fas-user-edit" iconSize="14" /></graphic>
                                         </Button>
                                     </HBox>
                                 </VBox>
                                 
-                                <VBox spacing="14" styleClass="container-card">
-                                    <HBox alignment="CENTER_LEFT" spacing="10">
-                                        <FontIcon iconColor="#27ae60" iconLiteral="fas-chart-bar" iconSize="20" />
-                                        <Label styleClass="section-title" text="Cashier Activity">
-                                            <font><Font name="Arial Bold" size="17.0" /></font>
+                                <!-- All Orders with Filter -->
+                                <VBox spacing="14">
+                                    <HBox alignment="CENTER_LEFT" spacing="15">
+                                        <Label styleClass="section-title" text="All Orders">
+                                            <font><Font name="Arial Bold" size="16.0" /></font>
                                         </Label>
+                                        <Label style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px; -fx-font-weight: 600;" text="Filter by:" />
+                                        <ComboBox fx:id="filterPeriod" prefWidth="150" styleClass="combo-box" />
                                     </HBox>
                                     
-                                    <TableView fx:id="cashierActivityTable" prefHeight="200.0" styleClass="table-view">
+                                    <TableView fx:id="ordersTable" prefHeight="200.0" styleClass="table-view">
                                         <columns>
-                                            <TableColumn fx:id="col_cashierName" prefWidth="180.0" text="Cashier Name" />
-                                            <TableColumn fx:id="col_orders" prefWidth="120.0" text="Orders Today" />
-                                            <TableColumn fx:id="col_sales" prefWidth="140.0" text="Sales Today" />
-                                            <TableColumn fx:id="col_customers" prefWidth="120.0" text="Customers" />
-                                            <TableColumn fx:id="col_loginTime" prefWidth="160.0" text="Login Time" />
-                                            <TableColumn fx:id="col_status" prefWidth="110.0" text="Status" />
+                                            <TableColumn fx:id="col_orderId" prefWidth="80.0" text="ID" />
+                                            <TableColumn fx:id="col_cashier" prefWidth="150.0" text="Cashier" />
+                                            <TableColumn fx:id="col_customer" prefWidth="150.0" text="Customer" />
+                                            <TableColumn fx:id="col_amount" prefWidth="130.0" text="Amount" />
+                                            <TableColumn fx:id="col_orderTime" prefWidth="200.0" text="Time" />
                                         </columns>
                                     </TableView>
                                 </VBox>
                                 
-                                <VBox fx:id="employeeSection" spacing="18" styleClass="container-card">
-                                    <HBox alignment="CENTER_LEFT" spacing="10">
-                                        <FontIcon iconColor="#27ae60" iconLiteral="fas-users-cog" iconSize="20" />
-                                        <Label styleClass="section-title" text="Employee Management">
-                                            <font><Font name="Arial Bold" size="17.0" /></font>
-                                        </Label>
-                                    </HBox>
+                                <!-- Cashier Activity -->
+                                <VBox spacing="14">
+                                    <Label styleClass="section-title" text="Cashier Activity (Today)">
+                                        <font><Font name="Arial Bold" size="16.0" /></font>
+                                    </Label>
+                                    
+                                    <TableView fx:id="cashierActivityTable" prefHeight="180.0" styleClass="table-view">
+                                        <columns>
+                                            <TableColumn fx:id="col_cashierName" prefWidth="150.0" text="Cashier Name" />
+                                            <TableColumn fx:id="col_orders" prefWidth="100.0" text="Orders" />
+                                            <TableColumn fx:id="col_sales" prefWidth="120.0" text="Sales" />
+                                            <TableColumn fx:id="col_customers" prefWidth="100.0" text="Customers" />
+                                            <TableColumn fx:id="col_loginTime" prefWidth="150.0" text="Login Time" />
+                                            <TableColumn fx:id="col_status" prefWidth="100.0" text="Status" />
+                                        </columns>
+                                    </TableView>
+                                </VBox>
+                                
+                                <!-- Employee Management Section -->
+                                <VBox fx:id="employeeSection" spacing="18">
+                                    <Label styleClass="section-title" text="Employee Management">
+                                        <font><Font name="Arial Bold" size="16.0" /></font>
+                                    </Label>
                                     
                                     <VBox spacing="16" styleClass="form-card">
                                         <GridPane hgap="14" vgap="14">
@@ -209,10 +287,10 @@
                                     
                                     <TableView fx:id="employeeTable" onMouseClicked="#selectEmployee" prefHeight="180.0" styleClass="table-view">
                                         <columns>
-                                            <TableColumn fx:id="col_empUsername" prefWidth="140.0" text="Username" />
-                                            <TableColumn fx:id="col_empName" prefWidth="160.0" text="Full Name" />
-                                            <TableColumn fx:id="col_empPhone" prefWidth="130.0" text="Phone" />
-                                            <TableColumn fx:id="col_empEmail" prefWidth="180.0" text="Email" />
+                                            <TableColumn fx:id="col_empUsername" prefWidth="130.0" text="Username" />
+                                            <TableColumn fx:id="col_empName" prefWidth="150.0" text="Full Name" />
+                                            <TableColumn fx:id="col_empPhone" prefWidth="120.0" text="Phone" />
+                                            <TableColumn fx:id="col_empEmail" prefWidth="160.0" text="Email" />
                                             <TableColumn fx:id="col_empSalary" prefWidth="110.0" text="Salary" />
                                             <TableColumn fx:id="col_empStatus" prefWidth="90.0" text="Status" />
                                         </columns>
@@ -223,37 +301,23 @@
                     </children>
                 </AnchorPane>
 
+                <!-- Menu Form (Placeholder) -->
                 <AnchorPane fx:id="menu_form" layoutX="220.0" prefHeight="650.0" prefWidth="880.0" styleClass="white-bg" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <VBox spacing="18" style="-fx-padding: 25;" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-                        <HBox alignment="CENTER_LEFT" spacing="12">
-                            <FontIcon iconColor="#27ae60" iconLiteral="fas-utensils" iconSize="28" />
-                            <Label styleClass="header-label" text="Menu Management">
-                                <font><Font name="Arial Bold" size="26.0" /></font>
-                            </Label>
-                        </HBox>
-                        <VBox spacing="14" styleClass="container-card">
-                            <Label styleClass="section-title" text="Coming Soon">
-                                <font><Font name="Arial Bold" size="17.0" /></font>
-                            </Label>
-                            <Label style="-fx-text-fill: #718096; -fx-font-size: 14px;" text="Menu management features will be available here." />
-                        </VBox>
+                        <Label styleClass="header-label" text="Menu Management">
+                            <font><Font name="Arial Bold" size="24.0" /></font>
+                        </Label>
+                        <Label style="-fx-text-fill: #718096; -fx-font-size: 14px;" text="Menu features coming soon..." />
                     </VBox>
                 </AnchorPane>
 
+                <!-- Inventory Form (Placeholder) -->
                 <AnchorPane fx:id="inventory_form" layoutX="220.0" prefHeight="650.0" prefWidth="880.0" styleClass="white-bg" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <VBox spacing="18" style="-fx-padding: 25;" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-                        <HBox alignment="CENTER_LEFT" spacing="12">
-                            <FontIcon iconColor="#27ae60" iconLiteral="fas-box" iconSize="28" />
-                            <Label styleClass="header-label" text="Inventory Management">
-                                <font><Font name="Arial Bold" size="26.0" /></font>
-                            </Label>
-                        </HBox>
-                        <VBox spacing="14" styleClass="container-card">
-                            <Label styleClass="section-title" text="Coming Soon">
-                                <font><Font name="Arial Bold" size="17.0" /></font>
-                            </Label>
-                            <Label style="-fx-text-fill: #718096; -fx-font-size: 14px;" text="Inventory management features will be available here." />
-                        </VBox>
+                        <Label styleClass="header-label" text="Inventory Management">
+                            <font><Font name="Arial Bold" size="24.0" /></font>
+                        </Label>
+                        <Label style="-fx-text-fill: #718096; -fx-font-size: 14px;" text="Inventory features coming soon..." />
                     </VBox>
                 </AnchorPane>
 

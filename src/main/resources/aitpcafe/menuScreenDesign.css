@@ -1,73 +1,85 @@
+/* ======================================== */
+/*  Creat by : Mariam Ibrahim 
+    Start    : 11/12                  
+    Page     : Menu Screen                  */
+/* ======================================== */
 .root {
-    -fx-background-color: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    -fx-background-color: linear-gradient(135deg, #c0f0e5 0%, #90e0c8 100%);
 }
 
+/* ======================================== */
+/*                WHITE CARDS               */
+/* ======================================== */
 .white-bg {
-    -fx-background-color: rgba(255,255,255,0.98);
+    -fx-background-color: rgba(255,255,255,0.97);
     -fx-background-radius: 16;
     -fx-padding: 0;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 15, 0, 0, 3);
 }
 
 .container-card {
     -fx-background-color: white;
     -fx-background-radius: 14;
     -fx-padding: 20;
-    -fx-border-color: rgba(39,174,96,0.15);
+    -fx-border-color: rgba(34,139,110,0.25);
     -fx-border-width: 1;
     -fx-border-radius: 14;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 2);
 }
 
+/* ======================================== */
+/*                TEXT STYLES               */
+/* ======================================== */
 .header-label {
-    -fx-text-fill: #1a3a0f;
+    -fx-text-fill: #009975;
     -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-letter-spacing: 0.5px;
 }
 
 .section-title {
-    -fx-text-fill: #2d5016;
+    -fx-text-fill: linear-gradient(to right, #0b4b54 0%, #2a777c 100%);
     -fx-font-size: 15px;
     -fx-font-weight: 700;
     -fx-letter-spacing: 0.4px;
 }
 
 .sub-label {
-    -fx-text-fill: #4a5568;
+    -fx-text-fill: #33695f;
     -fx-font-size: 12px;
     -fx-font-weight: 700;
     -fx-letter-spacing: 0.3px;
 }
 
+/* ======================================== */
+/*                ORDER TYPE BUTTONS        */
+/* ======================================== */
 .order-type-btn {
-    -fx-background-color: #f7faf8;
-    -fx-text-fill: #4a5568;
+    -fx-background-color: #33d6aa;
+    -fx-text-fill: #00664d;
     -fx-font-size: 11px;
     -fx-font-weight: 700;
     -fx-cursor: hand;
     -fx-background-radius: 9;
     -fx-padding: 11 14 11 14;
-    -fx-border-color: #c8e6c9;
-    -fx-border-width: 1.5;
+    -fx-border-color: #33d6aa;
+    -fx-border-width: 1;
     -fx-border-radius: 9;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 1);
 }
 
 .order-type-btn:hover {
-    -fx-background-color: #e8f5e9;
-    -fx-border-color: #27ae60;
-    -fx-translate-y: -2;
+    -fx-background-color: #2a777c;
+    -fx-text-fill: white;
 }
 
 .order-type-btn-selected {
-    -fx-background-color: #1a3a0f !important;
+    -fx-background-color:  #2a777c !important;
     -fx-text-fill: white !important;
-    -fx-border-color: #1a3a0f !important;
-    -fx-border-width: 2 !important;
-    -fx-effect: dropshadow(gaussian, rgba(26,58,15,0.35), 10, 0, 0, 3);
+    -fx-border-color: #009975 !important;
+    -fx-border-width: 1 !important;
 }
 
+/* ======================================== */
+/*                ORDER ITEMS               */
+/* ======================================== */
 .order-items-container {
     -fx-background-color: transparent;
     -fx-padding: 0;
@@ -83,48 +95,49 @@
 }
 
 .empty-label {
-    -fx-text-fill: #a0aec0;
+    -fx-text-fill: #82ACAB;
     -fx-font-size: 13px;
     -fx-font-style: italic;
     -fx-padding: 20 0 20 0;
 }
 
+/* ======= المنتج بعد التعديل لرمادي ======= */
 .order-item-box {
-    -fx-background-color: #f7faf8;
+    -fx-background-color: #fff;
     -fx-background-radius: 10;
-    -fx-border-color: #c8e6c9;
-    -fx-border-width: 1.5;
+    -fx-border-color: #bdbdbd;      /* رصاصي */
+    -fx-border-width: 1;
     -fx-border-radius: 10;
-    -fx-padding: 12 14 12 14;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 1);
+    -fx-padding: 10 12 10 12;
 }
 
 .order-item-box:hover {
-    -fx-background-color: white;
-    -fx-border-color: #27ae60;
+    -fx-border-color: #9e9e9e;      /* رصاصي أغمق */
 }
 
+/* النصوص داخل المنتج */
 .item-name {
     -fx-font-weight: 700;
     -fx-font-size: 13px;
-    -fx-text-fill: #1a3a0f;
+    -fx-text-fill: #424242;        /* رصاصي غامق */
 }
 
 .item-detail {
     -fx-font-size: 11px;
-    -fx-text-fill: #718096;
+    -fx-text-fill: #757575;        /* رصاصي متوسط */
     -fx-font-weight: 600;
 }
 
 .item-price {
     -fx-font-weight: 800;
     -fx-font-size: 15px;
-    -fx-text-fill: #1a3a0f;
+    -fx-text-fill: #424242;
 }
 
+/* زرار الحذف */
 .remove-item-btn {
-    -fx-background-color: #fed7d7;
-    -fx-text-fill: #c53030;
+    -fx-background-color: #ffe5e5;
+    -fx-text-fill: #c62828;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-cursor: hand;
@@ -136,97 +149,96 @@
 }
 
 .remove-item-btn:hover {
-    -fx-background-color: #fc8181;
+    -fx-background-color: #ff9999;
     -fx-text-fill: white;
-    -fx-scale-x: 1.1;
-    -fx-scale-y: 1.1;
 }
 
+/* ======================================== */
+/*                PRICE SUMMARY             */
+/* ======================================== */
 .price-summary {
     -fx-background-color: transparent;
     -fx-padding: 12 0 12 0;
 }
 
 .order-label {
-    -fx-text-fill: #4a5568;
+    -fx-text-fill: #00664d;
     -fx-font-size: 13px;
     -fx-font-weight: 600;
 }
 
 .order-value {
-    -fx-text-fill: #1a3a0f;
+    -fx-text-fill: #00664d;
     -fx-font-size: 13px;
     -fx-font-weight: 700;
-    -fx-alignment: center-right;
 }
 
 .total-label {
-    -fx-text-fill: #1a3a0f;
+    -fx-text-fill: #00664d;
     -fx-font-size: 15px;
     -fx-font-weight: 800;
 }
 
 .total-value {
-    -fx-text-fill: #1a3a0f;
+    -fx-text-fill: #00664d;
     -fx-font-size: 15px;
     -fx-font-weight: 800;
-    -fx-alignment: center-right;
 }
 
+/* ======================================== */
+/*                PAYMENT BUTTONS           */
+/* ======================================== */
 .payment-btn {
     -fx-background-color: white;
-    -fx-border-color: #c8e6c9;
+    -fx-border-color: #33d6aa;
     -fx-border-width: 2;
     -fx-border-radius: 12;
     -fx-background-radius: 12;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
 }
 
 .payment-btn:hover {
-    -fx-border-color: #27ae60;
-    -fx-translate-y: -3;
-    -fx-effect: dropshadow(gaussian, rgba(39,174,96,0.2), 12, 0, 0, 4);
+    -fx-background-color: #e0e0e0;      /* رصاصي */
+    -fx-border-color: #bdbdbd;
+    -fx-text-fill: #333;
 }
 
 .payment-btn-selected {
-    -fx-border-color: #27ae60 !important;
-    -fx-border-width: 3 !important;
-    -fx-background-color: #e8f5e9 !important;
-    -fx-effect: dropshadow(gaussian, rgba(39,174,96,0.35), 12, 0, 0, 4);
+    -fx-border-color: #bdbdbd !important;
+    -fx-background-color: #e0e0e0 !important;
 }
 
 .payment-label {
-    -fx-text-fill: #4a5568;
+    -fx-text-fill: #00664d;
     -fx-font-size: 11px;
     -fx-font-weight: 700;
     -fx-letter-spacing: 0.2px;
 }
 
+/* ======================================== */
+/*                PLACE ORDER BUTTON        */
+/* ======================================== */
 .place-order-btn {
-    -fx-background-color: linear-gradient(to right, #27ae60 0%, #2ecc71 100%);
+    -fx-background-color: linear-gradient(to right, #0b4b54 0%, #2a777c 100%);
     -fx-text-fill: white;
     -fx-font-size: 15px;
     -fx-font-weight: 800;
     -fx-cursor: hand;
     -fx-background-radius: 12;
     -fx-letter-spacing: 0.8px;
-    -fx-effect: dropshadow(gaussian, rgba(39,174,96,0.45), 12, 0, 0, 4);
 }
 
 .place-order-btn:hover {
-    -fx-background-color: linear-gradient(to right, #229954 0%, #27ae60 100%);
-    -fx-translate-y: -3;
-    -fx-scale-x: 1.02;
-    -fx-scale-y: 1.02;
-    -fx-effect: dropshadow(gaussian, rgba(39,174,96,0.6), 16, 0, 0, 6);
+    -fx-background-color: #2a777c;
 }
 
 .place-order-btn:pressed {
-    -fx-background-color: #1e7e34;
-    -fx-translate-y: 0;
+    -fx-background-color:  linear-gradient(to right, #82ACAB 0%, #2a777c 100%);
 }
 
+/* ======================================== */
+/*                SCROLLBARS                */
+/* ======================================== */
 .scroll-pane,
 .products-scroll {
     -fx-background-color: transparent;
@@ -244,12 +256,12 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: rgba(39,174,96,0.3);
+    -fx-background-color: #D3E4E7;
     -fx-background-radius: 4;
 }
 
 .scroll-bar .thumb:hover {
-    -fx-background-color: rgba(39,174,96,0.5);
+    -fx-background-color: #D3E4E7;
 }
 
 .scroll-bar .track {
@@ -263,10 +275,55 @@
     -fx-pref-height: 0;
 }
 
-.scroll-bar:horizontal .increment-arrow,
-.scroll-bar:horizontal .decrement-arrow,
-.scroll-bar:vertical .increment-arrow,
-.scroll-bar:vertical .decrement-arrow {
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
     -fx-padding: 0;
     -fx-shape: "";
+}
+/* Search Container */
+.searchContainer {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 8, 0, 0, 2);
+    -fx-padding: 8px 12px;
+}
+
+.searchContainer:hover {
+    -fx-border-color: #3498db;
+    -fx-effect: dropshadow(three-pass-box, rgba(52, 152, 219, 0.15), 10, 0, 0, 2);
+}
+
+/* Search Icon */
+.search-icon {
+    -fx-icon-color: #999999;
+    -fx-icon-size: 18;
+}
+
+/* Search Container */
+.searchContainer {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 12px;
+    -fx-padding: 5px 12px;
+}
+
+.search-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-text-fill: #2c3e50;
+    -fx-prompt-text-fill: #999999;
+}
+
+.search-field:focused {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+.search-icon {
+    -fx-fill: #999999;
 }

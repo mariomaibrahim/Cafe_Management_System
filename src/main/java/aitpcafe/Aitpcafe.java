@@ -12,14 +12,17 @@ public class Aitpcafe extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            
             Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            Scene scene = new Scene(root, 1100, 650);
 
-            Scene scene = new Scene(root);
             stage.setTitle("Cafe Management System - Login");
             stage.setScene(scene);
+            stage.setMinWidth(1100);
+            stage.setMinHeight(650);
+            stage.setMaxWidth(1100);
+            stage.setMaxHeight(650);
+            stage.setResizable(false);
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

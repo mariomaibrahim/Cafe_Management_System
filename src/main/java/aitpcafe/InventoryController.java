@@ -6,7 +6,6 @@ import java.sql.*;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import javafx.animation.TranslateTransition;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
@@ -20,30 +19,37 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class InventoryController implements Initializable {
 
-    @FXML private AnchorPane mainContainer;
-    @FXML private AnchorPane dashboard_form, menu_form, inventory_form;
-    @FXML private TableView<productData> inventory_table;
-    @FXML private TableColumn<productData, String> inventory_col_ID, inventory_col_productName,
+    @FXML
+    private AnchorPane mainContainer;
+    @FXML
+    private AnchorPane dashboard_form, menu_form, inventory_form;
+    @FXML
+    private TableView<productData> inventory_table;
+    @FXML
+    private TableColumn<productData, String> inventory_col_ID, inventory_col_productName,
             inventory_col_type, inventory_col_stock, inventory_col_price,
             inventory_col_status, inventory_col_date;
 
-    @FXML private TextField inventory_productID, inventory_productName, inventory_stock, inventory_price;
-    @FXML private ComboBox<String> inventory_type, inventory_status;
-    @FXML private Button inventory_addBtn, inventory_updateBtn, inventory_clearBtn,
+    @FXML
+    private TextField inventory_productID, inventory_productName, inventory_stock, inventory_price;
+    @FXML
+    private ComboBox<String> inventory_type, inventory_status;
+    @FXML
+    private Button inventory_addBtn, inventory_updateBtn, inventory_clearBtn,
             inventory_deleteBtn, inventory_importBtn;
-    @FXML private ImageView inventory_image;
+    @FXML
+    private ImageView inventory_image;
 
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
     private Image image;
     private ObservableList<productData> inventoryList;
-    
+
     private SidebarController sidebarController;
     private AnchorPane sidebar;
     private Button menu_btn, inventory_btn, dashboard_btn;
@@ -52,7 +58,7 @@ public class InventoryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         session = UserSession.getInstance();
-        
+
         loadSidebar();
         setupComboBoxes();
         inventoryShowData();
@@ -65,49 +71,64 @@ public class InventoryController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("sidebar.fxml"));
             sidebar = loader.load();
             sidebarController = loader.getController();
-            
+
             sidebarController.setTitle("Cafe Inventory");
             sidebarController.setSubtitle("Stock Management");
-            
-            // ترتيب الأزرار: Menu, Inventory, Dashboard
+
+            // إضافة callback للـ toggle
+            sidebarController.setOnToggleCallback(this::adjustContentPosition);
+
             menu_btn = createNavButton("menu_btn", "  Menu", "fas-utensils");
             inventory_btn = createNavButton("inventory_btn", "  Inventory", "fas-box");
             dashboard_btn = createNavButton("dashboard_btn", "  Dashboard", "fas-chart-line");
-            
+
             menu_btn.setOnAction(this::switchForm);
             inventory_btn.setOnAction(this::switchForm);
             dashboard_btn.setOnAction(this::switchForm);
-            
-            // تفعيل Inventory افتراضياً
+
             inventory_btn.getStyleClass().add("nav-btn-active");
-            
+
             sidebarController.getNavButtonsContainer().getChildren().addAll(menu_btn, inventory_btn, dashboard_btn);
             sidebarController.getLogoutButton().setOnAction(e -> logout());
-            
+
             Button toggleBtn = (Button) sidebar.lookup("#toggleSidebar");
             if (toggleBtn != null) {
-                toggleBtn.setOnAction(e -> {
-                    sidebarController.toggleSidebar();
-                    adjustContentPosition();
-                });
+                toggleBtn.setOnAction(e -> sidebarController.toggleSidebar());
             }
-            
+
             mainContainer.getChildren().add(0, sidebar);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void adjustContentPosition() {
-        if (sidebarController == null) return;
-        
+        if (sidebarController == null) {
+            return;
+        }
+
         double sidebarWidth = sidebarController.isExpanded() ? 220 : 70;
-        
+
         if (inventory_form != null) {
-            TranslateTransition transition = new TranslateTransition(Duration.millis(300), inventory_form);
-            transition.setToX(sidebarWidth - 220);
-            transition.play();
+            AnchorPane.setLeftAnchor(inventory_form, sidebarWidth);
+            AnchorPane.setRightAnchor(inventory_form, 0.0);
+            AnchorPane.setTopAnchor(inventory_form, 0.0);
+            AnchorPane.setBottomAnchor(inventory_form, 0.0);
+        }
+
+        if (dashboard_form != null) {
+            AnchorPane.setLeftAnchor(dashboard_form, sidebarWidth);
+            AnchorPane.setRightAnchor(dashboard_form, 0.0);
+            AnchorPane.setTopAnchor(dashboard_form, 0.0);
+            AnchorPane.setBottomAnchor(dashboard_form, 0.0);
+        }
+
+        if (menu_form != null) {
+            AnchorPane.setLeftAnchor(menu_form, sidebarWidth);
+            AnchorPane.setRightAnchor(menu_form, 0.0);
+            AnchorPane.setTopAnchor(menu_form, 0.0);
+            AnchorPane.setBottomAnchor(menu_form, 0.0);
         }
     }
 
@@ -116,12 +137,12 @@ public class InventoryController implements Initializable {
         btn.setId(id);
         btn.getStyleClass().add("nav-btn");
         btn.setPrefWidth(190);
-        
+
         FontIcon icon = new FontIcon(iconLiteral);
         icon.setIconColor(javafx.scene.paint.Color.WHITE);
         icon.setIconSize(16);
         btn.setGraphic(icon);
-        
+
         return btn;
     }
 
@@ -130,9 +151,8 @@ public class InventoryController implements Initializable {
         menu_btn.getStyleClass().remove("nav-btn-active");
         inventory_btn.getStyleClass().remove("nav-btn-active");
         dashboard_btn.getStyleClass().remove("nav-btn-active");
-        
+
         if (event.getSource() == dashboard_btn) {
-            // التحقق من الصلاحية والانتقال للصفحة المناسبة
             if (session.isAdmin()) {
                 switchToPage("admin.fxml");
             } else {
@@ -368,8 +388,8 @@ public class InventoryController implements Initializable {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Delete Confirmation");
         confirm.setHeaderText(null);
-        confirm.setContentText("Are you sure you want to delete product '" +
-                inventory_productID.getText() + "'?");
+        confirm.setContentText("Are you sure you want to delete product '"
+                + inventory_productID.getText() + "'?");
 
         if (confirm.showAndWait().get() != ButtonType.OK) {
             return;
@@ -446,13 +466,24 @@ public class InventoryController implements Initializable {
         try {
             session.clearSession();
             Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-            Stage stage = (Stage) mainContainer.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Cafe Management System - Login");
-            stage.show();
+
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Cafe Management System - Login");
+            loginStage.setScene(new Scene(root, 1100, 650)); // ✅ الحجم الموحد
+
+            loginStage.setResizable(false);
+            loginStage.setMinWidth(1100);
+            loginStage.setMinHeight(650);
+            loginStage.setMaxWidth(1100);
+            loginStage.setMaxHeight(650);
+
+            loginStage.show();
+
+            Stage currentStage = (Stage) mainContainer.getScene().getWindow();
+            currentStage.close();
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to logout");
+            System.exit(0);
         }
     }
 
@@ -466,9 +497,15 @@ public class InventoryController implements Initializable {
 
     private void closeResources() {
         try {
-            if (result != null) result.close();
-            if (prepare != null) prepare.close();
-            if (connect != null) connect.close();
+            if (result != null) {
+                result.close();
+            }
+            if (prepare != null) {
+                prepare.close();
+            }
+            if (connect != null) {
+                connect.close();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

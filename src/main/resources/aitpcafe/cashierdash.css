@@ -1,5 +1,6 @@
+
 .root {
-    -fx-background-color: linear-gradient(135deg, #0b2e26 0%, #163b2f 50%, #1f4f3a 100%);
+    -fx-background-color: linear-gradient(135deg, #0b4b54 0%, #1a5d68 50%, #2a777c 100%);
 }
 
 .white-bg {
@@ -10,14 +11,14 @@
 }
 
 .header-label {
-    -fx-text-fill: #1a3a0f;
+    -fx-text-fill: #0b4b54;
     -fx-font-size: 28px;
     -fx-font-weight: bold;
     -fx-letter-spacing: 0.5px;
 }
 
 .section-title {
-    -fx-text-fill: #2d5016;
+    -fx-text-fill: #165058;
     -fx-font-size: 17px;
     -fx-font-weight: bold;
     -fx-letter-spacing: 0.3px;
@@ -51,7 +52,7 @@
 }
 
 .stat-value {
-    -fx-text-fill: #1a3a0f;
+    -fx-text-fill: #0b4b54;
     -fx-font-size: 28px;
     -fx-font-weight: bold;
 }
@@ -65,10 +66,10 @@
 }
 
 .performance-card {
-    -fx-background-color: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+    -fx-background-color: linear-gradient(135deg, #0b4b54 0%, #2a777c 100%);
     -fx-background-radius: 14;
     -fx-padding: 22;
-    -fx-effect: dropshadow(gaussian, rgba(39,174,96,0.4), 14, 0, 0, 4);
+    -fx-effect: dropshadow(gaussian, rgba(42,119,124,0.4), 14, 0, 0, 4);
     -fx-pref-width: 320;
 }
 
@@ -80,19 +81,19 @@
 }
 
 .info-value {
-    -fx-text-fill: #1a3a0f;
+    -fx-text-fill: #0b4b54;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
 }
 
 .salary-value {
-    -fx-text-fill: #27ae60;
+    -fx-text-fill: #2a777c;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
 }
 
 .perf-label {
-    -fx-text-fill: rgba(255,255,255,0.95);
+    -fx-text-fill: black;
     -fx-font-size: 12px;
     -fx-font-weight: 600;
     -fx-letter-spacing: 0.3px;
@@ -102,10 +103,11 @@
     -fx-text-fill: white;
     -fx-font-size: 22px;
     -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,225,225,0.82), 12, 0, 0, 3);
 }
 
 .target-box {
-    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-color: rgba(255,255,255,0.4);
     -fx-background-radius: 10;
     -fx-padding: 12 16 12 16;
     -fx-border-color: rgba(255,255,255,0.6);
@@ -125,45 +127,45 @@
 }
 
 .performance-bar .bar {
-    -fx-background-color: linear-gradient(to right, #f1c40f, #f39c12);
+    -fx-background-color: radial-gradient(focus-angle -118.07deg, focus-distance 25.6881% , center 60.6195% 100.0%, radius 57.7982%, #00ffff 0.0%, #2a777c 100.0%);
     -fx-background-radius: 12;
     -fx-background-insets: 0;
 }
 
 .action-btn {
-    -fx-background-color: linear-gradient(to right, #3498db 0%, #5dade2 100%);
+    -fx-background-color: linear-gradient(to right, #0b4b54 0%, #2a777c 100%);
     -fx-text-fill: white;
     -fx-font-size: 13px;
     -fx-font-weight: 700;
     -fx-cursor: hand;
     -fx-background-radius: 10;
     -fx-padding: 10 18 10 18;
-    -fx-effect: dropshadow(gaussian, rgba(52,152,219,0.35), 10, 0, 0, 3);
+    -fx-effect: dropshadow(gaussian, rgba(42,119,124,0.35), 10, 0, 0, 3);
 }
 
 .action-btn:hover {
-    -fx-background-color: linear-gradient(to right, #2980b9 0%, #3498db 100%);
+    -fx-background-color: linear-gradient(to right, #094249 0%, #1f5d68 100%);
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
-    -fx-effect: dropshadow(gaussian, rgba(52,152,219,0.5), 14, 0, 0, 5);
+    -fx-effect: dropshadow(gaussian, rgba(42,119,124,0.5), 14, 0, 0, 5);
 }
 
 .action-btn-edit {
-    -fx-background-color: linear-gradient(to right, #e67e22 0%, #f39c12 100%);
+    -fx-background-color: linear-gradient(to right, #0b4b54 0%, #2a777c 100%);
     -fx-text-fill: white;
     -fx-font-size: 13px;
     -fx-font-weight: 700;
     -fx-cursor: hand;
     -fx-background-radius: 10;
     -fx-padding: 10 18 10 18;
-    -fx-effect: dropshadow(gaussian, rgba(230,126,34,0.35), 10, 0, 0, 3);
+    -fx-effect: dropshadow(gaussian, rgba(42,119,124,0.35), 10, 0, 0, 3);
 }
 
 .action-btn-edit:hover {
-    -fx-background-color: linear-gradient(to right, #d35400 0%, #e67e22 100%);
+    -fx-background-color: linear-gradient(to right, #094249 0%, #1f5d68 100%);
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
-    -fx-effect: dropshadow(gaussian, rgba(230,126,34,0.5), 14, 0, 0, 5);
+    -fx-effect: dropshadow(gaussian, rgba(42,119,124,0.5), 14, 0, 0, 5);
 }
 
 .stats-section {
@@ -174,20 +176,20 @@
 }
 
 .mini-card {
-    -fx-background-color: #f7faf8;
-    -fx-background-radius: 12;
+    -fx-background-color: #f0f9fa;
+    -fx-background-radius: 5%;
     -fx-padding: 18;
     -fx-spacing: 8;
     -fx-pref-width: 200;
     -fx-alignment: center;
-    -fx-border-color: #c8e6c9;
-    -fx-border-width: 2;
-    -fx-border-radius: 12;
+    -fx-border-color: #2a777c;
+    -fx-border-width: 0.2;
+    -fx-border-radius: 5%;
 }
 
 .mini-card:hover {
-    -fx-background-color: #e8f5e9;
-    -fx-border-color: #81c784;
+    -fx-background-color: #d9f2f5;
+    -fx-border-color: #42a5b3;
     -fx-translate-y: -2;
 }
 
@@ -199,7 +201,7 @@
 }
 
 .mini-value {
-    -fx-text-fill: #1a3a0f;
+    -fx-text-fill: #0b4b54;
     -fx-font-size: 22px;
     -fx-font-weight: bold;
 }
@@ -211,12 +213,12 @@
 }
 
 .table-view .column-header-background {
-    -fx-background-color: #27ae60;
+    -fx-background-color: #2a777c;
     -fx-background-radius: 14 14 0 0;
 }
 
 .table-view .column-header-background .filler {
-    -fx-background-color: #27ae60;
+    -fx-background-color: #2a777c;
 }
 
 .table-view .column-header {
@@ -235,7 +237,7 @@
 .table-view .table-cell {
     -fx-padding: 12 8 12 8;
     -fx-font-size: 12px;
-    -fx-text-fill: #2d5016;
+    -fx-text-fill: #165058;
     -fx-alignment: center-left;
 }
 
@@ -245,21 +247,21 @@
 }
 
 .table-row-cell:odd {
-    -fx-background-color: #f7faf8;
+    -fx-background-color: #f0f9fa;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #c8e6c9;
-    -fx-text-fill: #1a3a0f;
+    -fx-background-color: #b8dce0;
+    -fx-text-fill: #0b4b54;
 }
 
 .table-row-cell:hover {
-    -fx-background-color: #e8f5e9;
+    -fx-background-color: #d9f2f5;
     -fx-cursor: hand;
 }
 
 .table-row-cell:selected .table-cell {
-    -fx-text-fill: #1a3a0f;
+    -fx-text-fill: #0b4b54;
 }
 
 .scroll-pane {
@@ -277,12 +279,12 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: rgba(39,174,96,0.4);
+    -fx-background-color: rgba(42,119,124,0.4);
     -fx-background-radius: 6;
 }
 
 .scroll-bar .thumb:hover {
-    -fx-background-color: rgba(39,174,96,0.6);
+    -fx-background-color: rgba(42,119,124,0.6);
 }
 
 .scroll-bar .track {

@@ -6,7 +6,6 @@ import java.security.MessageDigest;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,26 +20,57 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class AdminController implements Initializable {
 
-    @FXML private AnchorPane dashboard_form, menu_form, inventory_form, mainContainer;
-    @FXML private Label totalCashiers, todayOrders, todayRevenue;
-    @FXML private TableView<CashierActivity> cashierActivityTable;
-    @FXML private TableColumn<CashierActivity, String> col_cashierName, col_status, col_loginTime;
-    @FXML private TableColumn<CashierActivity, Integer> col_orders, col_customers;
-    @FXML private TableColumn<CashierActivity, Double> col_sales;
-    @FXML private TextField emp_username, emp_fullname, emp_phone, emp_email, emp_salary, emp_answer;
-    @FXML private PasswordField emp_password;
-    @FXML private ComboBox<String> emp_question;
-    @FXML private TableView<Employee> employeeTable;
-    @FXML private TableColumn<Employee, String> col_empUsername, col_empName, col_empPhone, col_empEmail, col_empStatus;
-    @FXML private TableColumn<Employee, Double> col_empSalary;
-    @FXML private VBox employeeSection;
-    @FXML private Button toggleEmployeeBtn;
-    
+    @FXML
+    private AnchorPane dashboard_form, menu_form, inventory_form, mainContainer;
+    @FXML
+    private Label totalCashiers, todayOrders, todayRevenue, totalOrders, totalRevenue, totalCustomers;
+    @FXML
+    private Label weekOrders, weekRevenue, monthOrders;
+
+    // Cashier Activity Table
+    @FXML
+    private TableView<CashierActivity> cashierActivityTable;
+    @FXML
+    private TableColumn<CashierActivity, String> col_cashierName, col_status, col_loginTime;
+    @FXML
+    private TableColumn<CashierActivity, Integer> col_orders, col_customers;
+    @FXML
+    private TableColumn<CashierActivity, Double> col_sales;
+
+    // Orders Table with Filter
+    @FXML
+    private TableView<Order> ordersTable;
+    @FXML
+    private TableColumn<Order, Integer> col_orderId;
+    @FXML
+    private TableColumn<Order, String> col_cashier, col_customer, col_orderTime;
+    @FXML
+    private TableColumn<Order, Double> col_amount;
+    @FXML
+    private ComboBox<String> filterPeriod;
+
+    // Employee Management
+    @FXML
+    private TextField emp_username, emp_fullname, emp_phone, emp_email, emp_salary, emp_answer;
+    @FXML
+    private PasswordField emp_password;
+    @FXML
+    private ComboBox<String> emp_question;
+    @FXML
+    private TableView<Employee> employeeTable;
+    @FXML
+    private TableColumn<Employee, String> col_empUsername, col_empName, col_empPhone, col_empEmail, col_empStatus;
+    @FXML
+    private TableColumn<Employee, Double> col_empSalary;
+    @FXML
+    private VBox employeeSection;
+    @FXML
+    private Button toggleEmployeeBtn;
+
     private SidebarController sidebarController;
     private AnchorPane sidebar;
     private Button menu_btn, inventory_btn, dashboard_btn;
@@ -49,13 +79,13 @@ public class AdminController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         session = UserSession.getInstance();
-        
+
         if (!session.isAdmin()) {
             showAlert(Alert.AlertType.ERROR, "Access Denied! You don't have admin privileges.");
             logout();
             return;
         }
-        
+
         loadSidebar();
         loadDashboardData();
         setupCashierActivityTable();
@@ -63,6 +93,10 @@ public class AdminController implements Initializable {
         setupEmployeeTable();
         loadEmployeeData();
         setupQuestions();
+        setupOrdersTable();
+        setupFilterPeriod();
+        loadOrders();
+
         if (employeeSection != null) {
             employeeSection.setVisible(false);
             employeeSection.setManaged(false);
@@ -75,35 +109,33 @@ public class AdminController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("sidebar.fxml"));
             sidebar = loader.load();
             sidebarController = loader.getController();
-            
+
             sidebarController.setTitle("Cafe Admin");
             sidebarController.setSubtitle("Management System");
-            
-            // ترتيب الأزرار: Menu, Inventory, Dashboard
+
+            // إضافة callback للـ toggle
+            sidebarController.setOnToggleCallback(this::adjustContentPosition);
+
             menu_btn = createNavButton("menu_btn", "  Menu", "fas-utensils");
             inventory_btn = createNavButton("inventory_btn", "  Inventory", "fas-box");
             dashboard_btn = createNavButton("dashboard_btn", "  Dashboard", "fas-chart-line");
-            
+
             menu_btn.setOnAction(this::switchForm);
             inventory_btn.setOnAction(this::switchForm);
             dashboard_btn.setOnAction(this::switchForm);
-            
-            // تفعيل Dashboard افتراضياً
+
             dashboard_btn.getStyleClass().add("nav-btn-active");
-            
+
             sidebarController.getNavButtonsContainer().getChildren().addAll(menu_btn, inventory_btn, dashboard_btn);
             sidebarController.getLogoutButton().setOnAction(e -> logout());
-            
+
             Button toggleBtn = (Button) sidebar.lookup("#toggleSidebar");
             if (toggleBtn != null) {
-                toggleBtn.setOnAction(e -> {
-                    sidebarController.toggleSidebar();
-                    adjustContentPosition();
-                });
+                toggleBtn.setOnAction(e -> sidebarController.toggleSidebar());
             }
-            
+
             mainContainer.getChildren().add(0, sidebar);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,18 +143,27 @@ public class AdminController implements Initializable {
 
     private void adjustContentPosition() {
         double sidebarWidth = sidebarController.isExpanded() ? 220 : 70;
-        
-        TranslateTransition dashboardTransition = new TranslateTransition(Duration.millis(300), dashboard_form);
-        TranslateTransition menuTransition = new TranslateTransition(Duration.millis(300), menu_form);
-        TranslateTransition inventoryTransition = new TranslateTransition(Duration.millis(300), inventory_form);
-        
-        dashboardTransition.setToX(sidebarWidth - 220);
-        menuTransition.setToX(sidebarWidth - 220);
-        inventoryTransition.setToX(sidebarWidth - 220);
-        
-        dashboardTransition.play();
-        menuTransition.play();
-        inventoryTransition.play();
+
+        if (dashboard_form != null) {
+            AnchorPane.setLeftAnchor(dashboard_form, sidebarWidth);
+            AnchorPane.setRightAnchor(dashboard_form, 0.0);
+            AnchorPane.setTopAnchor(dashboard_form, 0.0);
+            AnchorPane.setBottomAnchor(dashboard_form, 0.0);
+        }
+
+        if (menu_form != null) {
+            AnchorPane.setLeftAnchor(menu_form, sidebarWidth);
+            AnchorPane.setRightAnchor(menu_form, 0.0);
+            AnchorPane.setTopAnchor(menu_form, 0.0);
+            AnchorPane.setBottomAnchor(menu_form, 0.0);
+        }
+
+        if (inventory_form != null) {
+            AnchorPane.setLeftAnchor(inventory_form, sidebarWidth);
+            AnchorPane.setRightAnchor(inventory_form, 0.0);
+            AnchorPane.setTopAnchor(inventory_form, 0.0);
+            AnchorPane.setBottomAnchor(inventory_form, 0.0);
+        }
     }
 
     private Button createNavButton(String id, String text, String iconLiteral) {
@@ -130,12 +171,12 @@ public class AdminController implements Initializable {
         btn.setId(id);
         btn.getStyleClass().add("nav-btn");
         btn.setPrefWidth(190);
-        
+
         FontIcon icon = new FontIcon(iconLiteral);
         icon.setIconColor(javafx.scene.paint.Color.WHITE);
         icon.setIconSize(16);
         btn.setGraphic(icon);
-        
+
         return btn;
     }
 
@@ -144,16 +185,17 @@ public class AdminController implements Initializable {
         dashboard_form.setVisible(false);
         menu_form.setVisible(false);
         inventory_form.setVisible(false);
-        
+
         menu_btn.getStyleClass().remove("nav-btn-active");
         inventory_btn.getStyleClass().remove("nav-btn-active");
         dashboard_btn.getStyleClass().remove("nav-btn-active");
-        
+
         if (event.getSource() == dashboard_btn) {
             dashboard_form.setVisible(true);
             dashboard_btn.getStyleClass().add("nav-btn-active");
             loadDashboardData();
             loadCashierActivityData();
+            loadOrders();
         } else if (event.getSource() == menu_btn) {
             switchToPage("menuScreen.fxml");
         } else if (event.getSource() == inventory_btn) {
@@ -178,10 +220,11 @@ public class AdminController implements Initializable {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        
+
         try {
             conn = DatabaseConfig.getConnection();
-            
+
+            // Total Active Cashiers
             String query = "SELECT COUNT(*) as total FROM employee WHERE role = 'cashier' AND status = 'active'";
             pstmt = conn.prepareStatement(query);
             rs = pstmt.executeQuery();
@@ -191,7 +234,8 @@ public class AdminController implements Initializable {
             rs.close();
             pstmt.close();
 
-            query = "SELECT COUNT(*) as total FROM customer_receipt WHERE date = CURDATE()";
+            // Today Orders
+            query = "SELECT COUNT(*) as total FROM customer_receipt WHERE DATE(date) = CURDATE()";
             pstmt = conn.prepareStatement(query);
             rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -200,11 +244,72 @@ public class AdminController implements Initializable {
             rs.close();
             pstmt.close();
 
-            query = "SELECT COALESCE(SUM(final_amount), 0) as total FROM customer_receipt WHERE date = CURDATE()";
+            // Today Revenue
+            query = "SELECT COALESCE(SUM(final_amount), 0) as total FROM customer_receipt WHERE DATE(date) = CURDATE()";
             pstmt = conn.prepareStatement(query);
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                todayRevenue.setText(String.format("$%.2f", rs.getDouble("total")));
+                todayRevenue.setText(String.format("%.2f EGP", rs.getDouble("total")));
+            }
+            rs.close();
+            pstmt.close();
+
+            // Total Orders
+            query = "SELECT COUNT(*) as total FROM customer_receipt";
+            pstmt = conn.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                totalOrders.setText(String.valueOf(rs.getInt("total")));
+            }
+            rs.close();
+            pstmt.close();
+
+            // Total Revenue
+            query = "SELECT COALESCE(SUM(final_amount), 0) as total FROM customer_receipt";
+            pstmt = conn.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                totalRevenue.setText(String.format("%.2f EGP", rs.getDouble("total")));
+            }
+            rs.close();
+            pstmt.close();
+
+            // Total Customers
+            query = "SELECT COUNT(DISTINCT customer_id) as total FROM customer_receipt";
+            pstmt = conn.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                totalCustomers.setText(String.valueOf(rs.getInt("total")));
+            }
+            rs.close();
+            pstmt.close();
+
+            // Week Orders
+            query = "SELECT COUNT(*) as total FROM customer_receipt WHERE date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+            pstmt = conn.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                weekOrders.setText(String.valueOf(rs.getInt("total")));
+            }
+            rs.close();
+            pstmt.close();
+
+            // Week Revenue
+            query = "SELECT COALESCE(SUM(final_amount), 0) as total FROM customer_receipt WHERE date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+            pstmt = conn.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                weekRevenue.setText(String.format("%.2f EGP", rs.getDouble("total")));
+            }
+            rs.close();
+            pstmt.close();
+
+            // Month Orders
+            query = "SELECT COUNT(*) as total FROM customer_receipt WHERE date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
+            pstmt = conn.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                monthOrders.setText(String.valueOf(rs.getInt("total")));
             }
 
         } catch (Exception e) {
@@ -222,6 +327,18 @@ public class AdminController implements Initializable {
         col_customers.setCellValueFactory(new PropertyValueFactory<>("customers"));
         col_loginTime.setCellValueFactory(new PropertyValueFactory<>("loginTime"));
         col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        col_sales.setCellFactory(column -> new TableCell<CashierActivity, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f EGP", item));
+                }
+            }
+        });
     }
 
     private void loadCashierActivityData() {
@@ -229,33 +346,33 @@ public class AdminController implements Initializable {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        
+
         try {
             conn = DatabaseConfig.getConnection();
-            String query = "SELECT e.full_name, e.status, e.last_login, " +
-                          "COALESCE(COUNT(cr.id), 0) as orders, " +
-                          "COALESCE(SUM(cr.final_amount), 0) as sales, " +
-                          "COALESCE(COUNT(DISTINCT cr.customer_id), 0) as customers " +
-                          "FROM employee e " +
-                          "LEFT JOIN customer_receipt cr ON e.username = cr.em_username AND cr.date = CURDATE() " +
-                          "WHERE e.role = 'cashier' " +
-                          "GROUP BY e.username, e.full_name, e.status, e.last_login " +
-                          "ORDER BY sales DESC";
-            
+            String query = "SELECT e.full_name, e.status, e.last_login, "
+                    + "COALESCE(COUNT(cr.id), 0) as orders, "
+                    + "COALESCE(SUM(cr.final_amount), 0) as sales, "
+                    + "COALESCE(COUNT(DISTINCT cr.customer_id), 0) as customers "
+                    + "FROM employee e "
+                    + "LEFT JOIN customer_receipt cr ON e.username = cr.em_username AND DATE(cr.date) = CURDATE() "
+                    + "WHERE e.role = 'cashier' "
+                    + "GROUP BY e.username, e.full_name, e.status, e.last_login "
+                    + "ORDER BY sales DESC";
+
             pstmt = conn.prepareStatement(query);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 Timestamp loginTime = rs.getTimestamp("last_login");
                 String loginStr = loginTime != null ? loginTime.toString() : "Never";
-                
+
                 CashierActivity activity = new CashierActivity(
-                    rs.getString("full_name"),
-                    rs.getInt("orders"),
-                    rs.getDouble("sales"),
-                    rs.getInt("customers"),
-                    loginStr,
-                    rs.getString("status")
+                        rs.getString("full_name"),
+                        rs.getInt("orders"),
+                        rs.getDouble("sales"),
+                        rs.getInt("customers"),
+                        loginStr,
+                        rs.getString("status")
                 );
                 activityList.add(activity);
             }
@@ -268,6 +385,94 @@ public class AdminController implements Initializable {
         }
     }
 
+    private void setupOrdersTable() {
+        col_orderId.setCellValueFactory(new PropertyValueFactory<>("orderId"));
+        col_cashier.setCellValueFactory(new PropertyValueFactory<>("cashier"));
+        col_customer.setCellValueFactory(new PropertyValueFactory<>("customer"));
+        col_amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        col_orderTime.setCellValueFactory(new PropertyValueFactory<>("orderTime"));
+
+        col_amount.setCellFactory(column -> new TableCell<Order, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f EGP", item));
+                }
+            }
+        });
+    }
+
+    private void setupFilterPeriod() {
+        ObservableList<String> periods = FXCollections.observableArrayList(
+                "Today", "This Week", "This Month", "Last 3 Months", "This Year", "All Time"
+        );
+        filterPeriod.setItems(periods);
+        filterPeriod.setValue("Today");
+        filterPeriod.setOnAction(e -> loadOrders());
+    }
+
+    @FXML
+    public void loadOrders() {
+        ObservableList<Order> ordersList = FXCollections.observableArrayList();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DatabaseConfig.getConnection();
+            String dateFilter = getDateFilter();
+
+            String query = "SELECT cr.id, cr.em_username, e.full_name as cashier_name, "
+                    + "cr.customer_name, cr.final_amount, cr.date "
+                    + "FROM customer_receipt cr "
+                    + "LEFT JOIN employee e ON cr.em_username = e.username "
+                    + dateFilter
+                    + " ORDER BY cr.id DESC LIMIT 100";
+
+            pstmt = conn.prepareStatement(query);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Order order = new Order(
+                        rs.getInt("id"),
+                        rs.getString("cashier_name") != null ? rs.getString("cashier_name") : rs.getString("em_username"),
+                        rs.getString("customer_name") != null ? rs.getString("customer_name") : "Walk-in Customer",
+                        rs.getDouble("final_amount"),
+                        rs.getTimestamp("date").toString()
+                );
+                ordersList.add(order);
+            }
+            ordersTable.setItems(ordersList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Failed to load orders");
+        } finally {
+            closeResources(rs, pstmt, conn);
+        }
+    }
+
+    private String getDateFilter() {
+        String period = filterPeriod.getValue();
+        switch (period) {
+            case "Today":
+                return "WHERE DATE(cr.date) = CURDATE()";
+            case "This Week":
+                return "WHERE cr.date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+            case "This Month":
+                return "WHERE cr.date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
+            case "Last 3 Months":
+                return "WHERE cr.date >= DATE_SUB(CURDATE(), INTERVAL 90 DAY)";
+            case "This Year":
+                return "WHERE YEAR(cr.date) = YEAR(CURDATE())";
+            case "All Time":
+            default:
+                return "";
+        }
+    }
+
     private void setupEmployeeTable() {
         col_empUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         col_empName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
@@ -275,6 +480,18 @@ public class AdminController implements Initializable {
         col_empEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         col_empSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
         col_empStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        col_empSalary.setCellFactory(column -> new TableCell<Employee, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f EGP", item));
+                }
+            }
+        });
     }
 
     private void loadEmployeeData() {
@@ -282,22 +499,22 @@ public class AdminController implements Initializable {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        
+
         try {
             conn = DatabaseConfig.getConnection();
-            String query = "SELECT username, full_name, phone, email, salary, status " +
-                          "FROM employee WHERE role = 'cashier' ORDER BY full_name";
+            String query = "SELECT username, full_name, phone, email, salary, status "
+                    + "FROM employee WHERE role = 'cashier' ORDER BY full_name";
             pstmt = conn.prepareStatement(query);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 Employee emp = new Employee(
-                    rs.getString("username"),
-                    rs.getString("full_name"),
-                    rs.getString("phone"),
-                    rs.getString("email"),
-                    rs.getDouble("salary"),
-                    rs.getString("status")
+                        rs.getString("username"),
+                        rs.getString("full_name"),
+                        rs.getString("phone"),
+                        rs.getString("email"),
+                        rs.getDouble("salary"),
+                        rs.getString("status")
                 );
                 employeeList.add(emp);
             }
@@ -312,11 +529,11 @@ public class AdminController implements Initializable {
 
     private void setupQuestions() {
         ObservableList<String> questions = FXCollections.observableArrayList(
-            "What is your favorite color?",
-            "What is your favorite food?",
-            "What is your pet's name?",
-            "Where were you born?",
-            "What is your mother's maiden name?"
+                "What is your favorite color?",
+                "What is your favorite food?",
+                "What is your pet's name?",
+                "Where were you born?",
+                "What is your mother's maiden name?"
         );
         emp_question.setItems(questions);
     }
@@ -326,7 +543,7 @@ public class AdminController implements Initializable {
         boolean isVisible = employeeSection.isVisible();
         employeeSection.setVisible(!isVisible);
         employeeSection.setManaged(!isVisible);
-        
+
         if (toggleEmployeeBtn != null) {
             if (isVisible) {
                 toggleEmployeeBtn.setText("Manage Employees");
@@ -339,11 +556,6 @@ public class AdminController implements Initializable {
     }
 
     @FXML
-    public void showCustomerReports() {
-        showAlert(Alert.AlertType.INFORMATION, "Customer reports feature coming soon");
-    }
-
-    @FXML
     public void editAdminProfile() {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Edit Admin Profile");
@@ -352,6 +564,7 @@ public class AdminController implements Initializable {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
+        grid.setPadding(new javafx.geometry.Insets(20, 150, 10, 10));
 
         TextField fullNameField = new TextField(session.getFullName());
         TextField phoneField = new TextField(session.getPhone());
@@ -375,8 +588,8 @@ public class AdminController implements Initializable {
 
         dialog.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                updateAdminProfile(fullNameField.getText(), phoneField.getText(), 
-                                  emailField.getText(), oldPassField.getText(), newPassField.getText());
+                updateAdminProfile(fullNameField.getText(), phoneField.getText(),
+                        emailField.getText(), oldPassField.getText(), newPassField.getText());
             }
         });
     }
@@ -385,16 +598,16 @@ public class AdminController implements Initializable {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        
+
         try {
             conn = DatabaseConfig.getConnection();
-            
+
             if (!newPass.isEmpty()) {
                 String verifyQuery = "SELECT password FROM employee WHERE username = ?";
                 pstmt = conn.prepareStatement(verifyQuery);
                 pstmt.setString(1, session.getUsername());
                 rs = pstmt.executeQuery();
-                
+
                 if (rs.next()) {
                     String storedPass = rs.getString("password");
                     if (!hashPassword(oldPass).equals(storedPass)) {
@@ -406,15 +619,15 @@ public class AdminController implements Initializable {
                 pstmt.close();
             }
 
-            String updateQuery = newPass.isEmpty() ? 
-                "UPDATE employee SET full_name = ?, phone = ?, email = ? WHERE username = ?" :
-                "UPDATE employee SET full_name = ?, phone = ?, email = ?, password = ? WHERE username = ?";
-            
+            String updateQuery = newPass.isEmpty()
+                    ? "UPDATE employee SET full_name = ?, phone = ?, email = ? WHERE username = ?"
+                    : "UPDATE employee SET full_name = ?, phone = ?, email = ?, password = ? WHERE username = ?";
+
             pstmt = conn.prepareStatement(updateQuery);
             pstmt.setString(1, fullName);
             pstmt.setString(2, phone);
             pstmt.setString(3, email);
-            
+
             if (!newPass.isEmpty()) {
                 pstmt.setString(4, hashPassword(newPass));
                 pstmt.setString(5, session.getUsername());
@@ -427,7 +640,7 @@ public class AdminController implements Initializable {
                 session.setFullName(fullName);
                 session.setPhone(phone);
                 session.setEmail(email);
-                
+
                 showAlert(Alert.AlertType.INFORMATION, "Profile updated successfully!");
             }
         } catch (Exception e) {
@@ -440,11 +653,11 @@ public class AdminController implements Initializable {
 
     @FXML
     public void addEmployee() {
-        if (emp_username.getText().isEmpty() || emp_password.getText().isEmpty() ||
-            emp_fullname.getText().isEmpty() || emp_phone.getText().isEmpty() ||
-            emp_email.getText().isEmpty() || emp_salary.getText().isEmpty() ||
-            emp_question.getValue() == null || emp_answer.getText().isEmpty()) {
-            
+        if (emp_username.getText().isEmpty() || emp_password.getText().isEmpty()
+                || emp_fullname.getText().isEmpty() || emp_phone.getText().isEmpty()
+                || emp_email.getText().isEmpty() || emp_salary.getText().isEmpty()
+                || emp_question.getValue() == null || emp_answer.getText().isEmpty()) {
+
             showAlert(Alert.AlertType.ERROR, "Please fill all fields");
             return;
         }
@@ -452,10 +665,10 @@ public class AdminController implements Initializable {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        
+
         try {
             conn = DatabaseConfig.getConnection();
-            
+
             String checkQuery = "SELECT username FROM employee WHERE username = ?";
             pstmt = conn.prepareStatement(checkQuery);
             pstmt.setString(1, emp_username.getText().trim());
@@ -468,9 +681,9 @@ public class AdminController implements Initializable {
             rs.close();
             pstmt.close();
 
-            String insertQuery = "INSERT INTO employee (username, password, question, answer, role, " +
-                               "full_name, phone, email, salary, hire_date, status, date) " +
-                               "VALUES (?, ?, ?, ?, 'cashier', ?, ?, ?, ?, ?, 'active', ?)";
+            String insertQuery = "INSERT INTO employee (username, password, question, answer, role, "
+                    + "full_name, phone, email, salary, hire_date, status, date) "
+                    + "VALUES (?, ?, ?, ?, 'cashier', ?, ?, ?, ?, ?, 'active', ?)";
             pstmt = conn.prepareStatement(insertQuery);
             pstmt.setString(1, emp_username.getText().trim());
             pstmt.setString(2, hashPassword(emp_password.getText()));
@@ -511,14 +724,14 @@ public class AdminController implements Initializable {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
-        
+
         try {
             conn = DatabaseConfig.getConnection();
-            
-            String updateQuery = emp_password.getText().isEmpty() ?
-                "UPDATE employee SET full_name = ?, phone = ?, email = ?, salary = ?, question = ?, answer = ? WHERE username = ?" :
-                "UPDATE employee SET full_name = ?, phone = ?, email = ?, salary = ?, question = ?, answer = ?, password = ? WHERE username = ?";
-            
+
+            String updateQuery = emp_password.getText().isEmpty()
+                    ? "UPDATE employee SET full_name = ?, phone = ?, email = ?, salary = ?, question = ?, answer = ? WHERE username = ?"
+                    : "UPDATE employee SET full_name = ?, phone = ?, email = ?, salary = ?, question = ?, answer = ?, password = ? WHERE username = ?";
+
             pstmt = conn.prepareStatement(updateQuery);
             pstmt.setString(1, emp_fullname.getText().trim());
             pstmt.setString(2, emp_phone.getText().trim());
@@ -526,7 +739,7 @@ public class AdminController implements Initializable {
             pstmt.setDouble(4, Double.parseDouble(emp_salary.getText().trim()));
             pstmt.setString(5, emp_question.getValue());
             pstmt.setString(6, emp_answer.getText().trim());
-            
+
             if (!emp_password.getText().isEmpty()) {
                 pstmt.setString(7, hashPassword(emp_password.getText()));
                 pstmt.setString(8, emp_username.getText().trim());
@@ -559,14 +772,14 @@ public class AdminController implements Initializable {
         Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmAlert.setTitle("Confirm Delete");
         confirmAlert.setContentText("Are you sure you want to delete this employee?");
-        
+
         if (confirmAlert.showAndWait().get() != ButtonType.OK) {
             return;
         }
 
         Connection conn = null;
         PreparedStatement pstmt = null;
-        
+
         try {
             conn = DatabaseConfig.getConnection();
             String deleteQuery = "DELETE FROM employee WHERE username = ? AND role = 'cashier'";
@@ -620,10 +833,21 @@ public class AdminController implements Initializable {
         try {
             session.clearSession();
             Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-            Stage stage = (Stage) mainContainer.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Cafe Management System - Login");
-            stage.show();
+
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Cafe Management System - Login");
+            loginStage.setScene(new Scene(root, 1100, 650)); // ✅ الحجم الموحد
+
+            loginStage.setResizable(false);
+            loginStage.setMinWidth(1100);
+            loginStage.setMinHeight(650);
+            loginStage.setMaxWidth(1100);
+            loginStage.setMaxHeight(650);
+
+            loginStage.show();
+
+            Stage currentStage = (Stage) mainContainer.getScene().getWindow();
+            currentStage.close();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -637,7 +861,9 @@ public class AdminController implements Initializable {
             StringBuilder hexString = new StringBuilder();
             for (byte b : hash) {
                 String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) hexString.append('0');
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
                 hexString.append(hex);
             }
             return hexString.toString();
@@ -655,24 +881,29 @@ public class AdminController implements Initializable {
 
     private void closeResources(ResultSet rs, PreparedStatement pstmt, Connection conn) {
         try {
-            if (rs != null) rs.close();
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    // Model Classes
     public static class CashierActivity {
-        private String cashierName;
-        private Integer orders;
-        private Double sales;
-        private Integer customers;
-        private String loginTime;
-        private String status;
 
-        public CashierActivity(String cashierName, Integer orders, Double sales, 
-                              Integer customers, String loginTime, String status) {
+        private String cashierName, loginTime, status;
+        private Integer orders, customers;
+        private Double sales;
+
+        public CashierActivity(String cashierName, Integer orders, Double sales,
+                Integer customers, String loginTime, String status) {
             this.cashierName = cashierName;
             this.orders = orders;
             this.sales = sales;
@@ -681,20 +912,38 @@ public class AdminController implements Initializable {
             this.status = status;
         }
 
-        public String getCashierName() { return cashierName; }
-        public Integer getOrders() { return orders; }
-        public Double getSales() { return sales; }
-        public Integer getCustomers() { return customers; }
-        public String getLoginTime() { return loginTime; }
-        public String getStatus() { return status; }
+        public String getCashierName() {
+            return cashierName;
+        }
+
+        public Integer getOrders() {
+            return orders;
+        }
+
+        public Double getSales() {
+            return sales;
+        }
+
+        public Integer getCustomers() {
+            return customers;
+        }
+
+        public String getLoginTime() {
+            return loginTime;
+        }
+
+        public String getStatus() {
+            return status;
+        }
     }
 
     public static class Employee {
+
         private String username, fullName, phone, email, status;
         private Double salary;
 
-        public Employee(String username, String fullName, String phone, 
-                       String email, Double salary, String status) {
+        public Employee(String username, String fullName, String phone,
+                String email, Double salary, String status) {
             this.username = username;
             this.fullName = fullName;
             this.phone = phone;
@@ -703,11 +952,63 @@ public class AdminController implements Initializable {
             this.status = status;
         }
 
-        public String getUsername() { return username; }
-        public String getFullName() { return fullName; }
-        public String getPhone() { return phone; }
-        public String getEmail() { return email; }
-        public Double getSalary() { return salary; }
-        public String getStatus() { return status; }
+        public String getUsername() {
+            return username;
+        }
+
+        public String getFullName() {
+            return fullName;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public Double getSalary() {
+            return salary;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+    }
+
+    public static class Order {
+
+        private Integer orderId;
+        private String cashier, customer, orderTime;
+        private Double amount;
+
+        public Order(Integer orderId, String cashier, String customer, Double amount, String orderTime) {
+            this.orderId = orderId;
+            this.cashier = cashier;
+            this.customer = customer;
+            this.amount = amount;
+            this.orderTime = orderTime;
+        }
+
+        public Integer getOrderId() {
+            return orderId;
+        }
+
+        public String getCashier() {
+            return cashier;
+        }
+
+        public String getCustomer() {
+            return customer;
+        }
+
+        public Double getAmount() {
+            return amount;
+        }
+
+        public String getOrderTime() {
+            return orderTime;
+        }
     }
 }

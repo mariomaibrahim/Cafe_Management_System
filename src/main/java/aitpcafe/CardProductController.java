@@ -34,20 +34,21 @@ public class CardProductController implements Initializable {
         this.prodData = prodData;
 
         if (prodData != null) {
-            // Set product name with proper truncation
+
+            // -------- Product Name --------
             String name = prodData.getProductName();
             if (name != null && name.length() > 30) {
                 name = name.substring(0, 27) + "...";
             }
             productName.setText(name != null ? name : "Unknown Product");
-            
-            // Set product price with EGP currency
+
+            // -------- Price --------
             productPrice.setText(String.format("%.2f EGP", prodData.getPrice()));
 
-            // Load product image
+            // -------- Image Load --------
             loadProductImage(prodData.getImage());
-            
-            // Set button action
+
+            // -------- Add To Cart Button --------
             if (productBtn != null) {
                 productBtn.setOnAction(event -> addToCart());
             }
@@ -60,7 +61,7 @@ public class CardProductController implements Initializable {
                 File file = new File(imagePath);
 
                 if (file.exists()) {
-                    image = new Image(file.toURI().toString(), 190, 140, true, true);
+                    image = new Image(file.toURI().toString(), 149, 100, true, true);
                     productimage.setImage(image);
                 } else {
                     loadDefaultImage();
@@ -86,47 +87,56 @@ public class CardProductController implements Initializable {
     private void addToCart() {
         if (prodData != null && productScroll != null && menuController != null) {
             int quantity = productScroll.getValue();
-            
+
             if (quantity > 0) {
-                // Check if quantity is available in stock
+
+                // Check stock limit
                 if (quantity > prodData.getStock()) {
-                    showAlert(Alert.AlertType.WARNING, "Insufficient Stock", 
-                             "Only " + prodData.getStock() + " items available in stock!");
+                    showAlert(Alert.AlertType.WARNING, "Insufficient Stock",
+                            "Only " + prodData.getStock() + " items available!");
                     return;
                 }
-                
-                // Add to cart through menu controller
+
+                // Add product to cart
                 menuController.addToOrder(prodData, quantity);
-                
-                // Show success message
-                showAlert(Alert.AlertType.INFORMATION, "Added to Cart", 
-                         quantity + "x " + prodData.getProductName() + " added successfully!");
-                
-                // Reset spinner to 1
+
+                // Success message
+                showAlert(Alert.AlertType.INFORMATION, "Added!",
+                        quantity + "x " + prodData.getProductName() + " added successfully!");
+
+                // Reset spinner
                 productScroll.getValueFactory().setValue(1);
+
             } else {
-                showAlert(Alert.AlertType.WARNING, "Invalid Quantity", 
-                         "Please select a quantity greater than 0!");
+                showAlert(Alert.AlertType.WARNING, "Invalid Quantity",
+                        "Quantity must be greater than 0!");
             }
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        // -------- Quantity Spinner Settings --------
         if (productScroll != null) {
+
             SpinnerValueFactory<Integer> valueFactory =
                     new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1);
             productScroll.setValueFactory(valueFactory);
-            
+
             productScroll.setEditable(true);
-            
+
             productScroll.valueProperty().addListener((obs, oldValue, newValue) -> {
+
                 if (newValue == null || newValue < 1) {
                     productScroll.getValueFactory().setValue(1);
-                } else if (prodData != null && newValue > prodData.getStock()) {
+                }
+
+                else if (prodData != null && newValue > prodData.getStock()) {
                     productScroll.getValueFactory().setValue(prodData.getStock());
-                    showAlert(Alert.AlertType.WARNING, "Stock Limit", 
-                             "Maximum available quantity is " + prodData.getStock());
+
+                    showAlert(Alert.AlertType.WARNING, "Stock Limit",
+                            "Max allowed is " + prodData.getStock());
                 }
             });
         }

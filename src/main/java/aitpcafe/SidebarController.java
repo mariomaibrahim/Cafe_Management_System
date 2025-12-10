@@ -27,6 +27,9 @@ public class SidebarController implements Initializable {
     private boolean sidebarExpanded = true;
     private static final int SIDEBAR_EXPANDED_WIDTH = 220;
     private static final int SIDEBAR_COLLAPSED_WIDTH = 70;
+    
+    // Callback للتواصل مع الـ Controller الرئيسي
+    private Runnable onToggleCallback;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -46,9 +49,6 @@ public class SidebarController implements Initializable {
 
     @FXML
     public void toggleSidebar() {
-        TranslateTransition sidebarTransition = new TranslateTransition(Duration.millis(300), sidebar);
-        sidebarTransition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
-        
         if (sidebarExpanded) {
             // Collapse sidebar
             sidebar.setPrefWidth(SIDEBAR_COLLAPSED_WIDTH);
@@ -69,6 +69,11 @@ public class SidebarController implements Initializable {
         
         updateToggleIcon();
         sidebarExpanded = !sidebarExpanded;
+        
+        // استدعاء الـ callback لتحديث المحتوى
+        if (onToggleCallback != null) {
+            onToggleCallback.run();
+        }
     }
 
     private void hideButtonText() {
@@ -148,5 +153,10 @@ public class SidebarController implements Initializable {
     
     public AnchorPane getSidebar() {
         return sidebar;
+    }
+    
+    // Method جديد لتعيين الـ callback
+    public void setOnToggleCallback(Runnable callback) {
+        this.onToggleCallback = callback;
     }
 }

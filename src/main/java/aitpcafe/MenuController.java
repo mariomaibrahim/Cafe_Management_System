@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,56 +20,64 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class MenuController implements Initializable {
 
-    @FXML private AnchorPane mainContainer;
-    @FXML private AnchorPane dashboard_form, menu_form, inventory_form;
-    @FXML private GridPane menu_gridpane;
-    @FXML private ScrollPane menu_scrollpane;
-    @FXML private VBox orderItemsContainer;
-    @FXML private Label subTotalLabel, taxLabel, totalLabel;
-    @FXML private Button placeOrderBtn;
-    @FXML private Button dineInBtn, takeAwayBtn, deliveryBtn;
-    @FXML private Button cashBtn, cardBtn, digitalBtn;
+    @FXML
+    private AnchorPane mainContainer;
+    @FXML
+    private AnchorPane dashboard_form, menu_form, inventory_form;
+    @FXML
+    private GridPane menu_gridpane;
+    @FXML
+    private ScrollPane menu_scrollpane;
+    @FXML
+    private VBox orderItemsContainer;
+    @FXML
+    private Label subTotalLabel, taxLabel, totalLabel;
+    @FXML
+    private Button placeOrderBtn;
+    @FXML
+    private Button dineInBtn, takeAwayBtn, deliveryBtn;
+    @FXML
+    private Button cashBtn, cardBtn, digitalBtn;
 
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
     private ObservableList<productData> cardListData = FXCollections.observableArrayList();
     private ArrayList<OrderItem> currentOrder = new ArrayList<>();
-    
+
     private SidebarController sidebarController;
     private AnchorPane sidebar;
     private Button menu_btn, inventory_btn, dashboard_btn;
     private UserSession session;
-    
+
     private String selectedOrderType = "Dine In";
     private String selectedPaymentMethod = "Cash";
-    
+
     private Button selectedOrderTypeBtn;
     private Button selectedPaymentBtn;
-    
+
     private int customerIdCounter = 1000;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         session = UserSession.getInstance();
-        
+
         loadSidebar();
         setupGridPane();
         menuDisplayCard();
         adjustContentPosition();
         updateOrderSummary();
         loadLastCustomerId();
-        
+
         if (dineInBtn != null) {
             selectedOrderTypeBtn = dineInBtn;
             dineInBtn.getStyleClass().add("order-type-btn-selected");
         }
-        
+
         if (cashBtn != null) {
             selectedPaymentBtn = cashBtn;
             cashBtn.getStyleClass().add("payment-btn-selected");
@@ -84,7 +91,7 @@ public class MenuController implements Initializable {
                 String sql = "SELECT MAX(customer_id) as last_id FROM customer_receipt";
                 prepare = connect.prepareStatement(sql);
                 result = prepare.executeQuery();
-                
+
                 if (result.next()) {
                     int lastId = result.getInt("last_id");
                     customerIdCounter = (lastId > 0) ? lastId + 1 : 1000;
@@ -99,8 +106,8 @@ public class MenuController implements Initializable {
 
     private void setupGridPane() {
         if (menu_gridpane != null) {
-            menu_gridpane.setHgap(15);
-            menu_gridpane.setVgap(15);
+            menu_gridpane.setHgap(12);
+            menu_gridpane.setVgap(12);
             menu_gridpane.setPadding(new Insets(10));
         }
     }
@@ -110,35 +117,33 @@ public class MenuController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("sidebar.fxml"));
             sidebar = loader.load();
             sidebarController = loader.getController();
-            
+
             sidebarController.setTitle("Cafe Menu");
             sidebarController.setSubtitle("Order Management");
-            
-            // ترتيب الأزرار: Menu, Inventory, Dashboard
+
+            // إضافة callback للـ toggle
+            sidebarController.setOnToggleCallback(this::adjustContentPosition);
+
             menu_btn = createNavButton("menu_btn", "  Menu", "fas-utensils");
             inventory_btn = createNavButton("inventory_btn", "  Inventory", "fas-box");
             dashboard_btn = createNavButton("dashboard_btn", "  Dashboard", "fas-chart-line");
-            
+
             menu_btn.setOnAction(this::switchForm);
             inventory_btn.setOnAction(this::switchForm);
             dashboard_btn.setOnAction(this::switchForm);
-            
-            // تفعيل Menu افتراضياً
+
             menu_btn.getStyleClass().add("nav-btn-active");
-            
+
             sidebarController.getNavButtonsContainer().getChildren().addAll(menu_btn, inventory_btn, dashboard_btn);
             sidebarController.getLogoutButton().setOnAction(e -> logout());
-            
+
             Button toggleBtn = (Button) sidebar.lookup("#toggleSidebar");
             if (toggleBtn != null) {
-                toggleBtn.setOnAction(e -> {
-                    sidebarController.toggleSidebar();
-                    adjustContentPosition();
-                });
+                toggleBtn.setOnAction(e -> sidebarController.toggleSidebar());
             }
-            
+
             mainContainer.getChildren().add(0, sidebar);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -146,11 +151,26 @@ public class MenuController implements Initializable {
 
     private void adjustContentPosition() {
         double sidebarWidth = sidebarController.isExpanded() ? 220 : 70;
-        
+
         if (menu_form != null) {
-            TranslateTransition menuTransition = new TranslateTransition(Duration.millis(300), menu_form);
-            menuTransition.setToX(sidebarWidth - 220);
-            menuTransition.play();
+            AnchorPane.setLeftAnchor(menu_form, sidebarWidth);
+            AnchorPane.setRightAnchor(menu_form, 0.0);
+            AnchorPane.setTopAnchor(menu_form, 0.0);
+            AnchorPane.setBottomAnchor(menu_form, 0.0);
+        }
+
+        if (dashboard_form != null) {
+            AnchorPane.setLeftAnchor(dashboard_form, sidebarWidth);
+            AnchorPane.setRightAnchor(dashboard_form, 0.0);
+            AnchorPane.setTopAnchor(dashboard_form, 0.0);
+            AnchorPane.setBottomAnchor(dashboard_form, 0.0);
+        }
+
+        if (inventory_form != null) {
+            AnchorPane.setLeftAnchor(inventory_form, sidebarWidth);
+            AnchorPane.setRightAnchor(inventory_form, 0.0);
+            AnchorPane.setTopAnchor(inventory_form, 0.0);
+            AnchorPane.setBottomAnchor(inventory_form, 0.0);
         }
     }
 
@@ -159,12 +179,12 @@ public class MenuController implements Initializable {
         btn.setId(id);
         btn.getStyleClass().add("nav-btn");
         btn.setPrefWidth(190);
-        
+
         FontIcon icon = new FontIcon(iconLiteral);
         icon.setIconColor(javafx.scene.paint.Color.WHITE);
         icon.setIconSize(16);
         btn.setGraphic(icon);
-        
+
         return btn;
     }
 
@@ -173,9 +193,8 @@ public class MenuController implements Initializable {
         menu_btn.getStyleClass().remove("nav-btn-active");
         inventory_btn.getStyleClass().remove("nav-btn-active");
         dashboard_btn.getStyleClass().remove("nav-btn-active");
-        
+
         if (event.getSource() == dashboard_btn) {
-            // التحقق من الصلاحية والانتقال للصفحة المناسبة
             if (session.isAdmin()) {
                 switchToPage("admin.fxml");
             } else {
@@ -249,7 +268,7 @@ public class MenuController implements Initializable {
 
             int row = 0;
             int column = 0;
-            int maxColumns = 2;
+            int maxColumns = 3;
 
             for (productData product : cardListData) {
                 try {
@@ -262,10 +281,12 @@ public class MenuController implements Initializable {
                         controller.setMenuController(this);
                     }
 
-                    pane.setMaxWidth(220);
-                    pane.setMaxHeight(280);
-                    pane.setPrefWidth(220);
-                    pane.setPrefHeight(280);
+                    pane.setMaxWidth(170);
+                    pane.setMaxHeight(220);
+                    pane.setPrefWidth(170);
+                    pane.setPrefHeight(220);
+                    pane.setMinWidth(170);
+                    pane.setMinHeight(220);
 
                     if (column == maxColumns) {
                         column = 0;
@@ -273,7 +294,7 @@ public class MenuController implements Initializable {
                     }
 
                     menu_gridpane.add(pane, column++, row);
-                    GridPane.setMargin(pane, new Insets(10));
+                    GridPane.setMargin(pane, new Insets(8));
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -284,7 +305,7 @@ public class MenuController implements Initializable {
 
     public void addToOrder(productData product, int quantity) {
         boolean found = false;
-        
+
         for (OrderItem item : currentOrder) {
             if (item.getProduct().getProductId().equals(product.getProductId())) {
                 item.setQuantity(item.getQuantity() + quantity);
@@ -292,20 +313,22 @@ public class MenuController implements Initializable {
                 break;
             }
         }
-        
+
         if (!found) {
             currentOrder.add(new OrderItem(product, quantity));
         }
-        
+
         updateOrderDisplay();
         updateOrderSummary();
     }
 
     private void updateOrderDisplay() {
-        if (orderItemsContainer == null) return;
-        
+        if (orderItemsContainer == null) {
+            return;
+        }
+
         orderItemsContainer.getChildren().clear();
-        
+
         if (currentOrder.isEmpty()) {
             Label emptyLabel = new Label("No items yet");
             emptyLabel.getStyleClass().add("empty-label");
@@ -325,25 +348,31 @@ public class MenuController implements Initializable {
         box.setAlignment(Pos.CENTER_LEFT);
         box.getStyleClass().add("order-item-box");
         box.setPadding(new Insets(10, 12, 10, 12));
-        
+
         VBox infoBox = new VBox(4);
         Label nameLabel = new Label(item.getProduct().getProductName());
         nameLabel.getStyleClass().add("item-name");
-        
-        Label detailLabel = new Label(item.getQuantity() + " × " + 
-                                      String.format("%.2f", item.getProduct().getPrice()));
+
+        Label detailLabel = new Label(item.getQuantity() + " × "
+                + String.format("%.2f", item.getProduct().getPrice()));
         detailLabel.getStyleClass().add("item-detail");
-        
+
         infoBox.getChildren().addAll(nameLabel, detailLabel);
         HBox.setHgrow(infoBox, Priority.ALWAYS);
-        
+
         Label priceLabel = new Label(String.format("%.2f", item.getTotal()));
         priceLabel.getStyleClass().add("item-price");
-        
-        Button removeBtn = new Button("×");
+
+        Button removeBtn = new Button();
         removeBtn.getStyleClass().add("remove-item-btn");
+
+        FontIcon trashIcon = new FontIcon("fas-trash");
+        trashIcon.setIconSize(14);
+        trashIcon.setIconColor(javafx.scene.paint.Color.web("#c62828"));
+        removeBtn.setGraphic(trashIcon);
+
         removeBtn.setOnAction(e -> removeFromOrder(item));
-        
+
         box.getChildren().addAll(infoBox, priceLabel, removeBtn);
         return box;
     }
@@ -358,23 +387,29 @@ public class MenuController implements Initializable {
         double subTotal = currentOrder.stream()
                 .mapToDouble(OrderItem::getTotal)
                 .sum();
-        
+
         double tax = subTotal * 0.05;
         double total = subTotal + tax;
-        
-        if (subTotalLabel != null) subTotalLabel.setText(String.format("%.2f EGP", subTotal));
-        if (taxLabel != null) taxLabel.setText(String.format("%.2f EGP", tax));
-        if (totalLabel != null) totalLabel.setText(String.format("%.2f EGP", total));
+
+        if (subTotalLabel != null) {
+            subTotalLabel.setText(String.format("%.2f EGP", subTotal));
+        }
+        if (taxLabel != null) {
+            taxLabel.setText(String.format("%.2f EGP", tax));
+        }
+        if (totalLabel != null) {
+            totalLabel.setText(String.format("%.2f EGP", total));
+        }
     }
 
     @FXML
     public void setOrderType(ActionEvent event) {
         Button btn = (Button) event.getSource();
-        
+
         if (selectedOrderTypeBtn != null) {
             selectedOrderTypeBtn.getStyleClass().remove("order-type-btn-selected");
         }
-        
+
         btn.getStyleClass().add("order-type-btn-selected");
         selectedOrderTypeBtn = btn;
         selectedOrderType = btn.getText();
@@ -383,14 +418,14 @@ public class MenuController implements Initializable {
     @FXML
     public void setPaymentMethod(ActionEvent event) {
         Button btn = (Button) event.getSource();
-        
+
         if (selectedPaymentBtn != null) {
             selectedPaymentBtn.getStyleClass().remove("payment-btn-selected");
         }
-        
+
         btn.getStyleClass().add("payment-btn-selected");
         selectedPaymentBtn = btn;
-        
+
         if (btn == cashBtn) {
             selectedPaymentMethod = "Cash";
         } else if (btn == cardBtn) {
@@ -416,7 +451,7 @@ public class MenuController implements Initializable {
         String customerName = result.orElse("Walk-in Customer");
 
         boolean success = saveOrderToDatabase(customerName);
-        
+
         if (success) {
             generateReceipt(customerName);
             clearOrder();
@@ -427,7 +462,7 @@ public class MenuController implements Initializable {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        
+
         try {
             conn = database.connectDB();
             if (conn == null) {
@@ -453,17 +488,17 @@ public class MenuController implements Initializable {
             pstmt.setDouble(6, tax);
             pstmt.setDouble(7, total);
             pstmt.setString(8, session.getUsername());
-            
+
             int affectedRows = pstmt.executeUpdate();
-            
+
             if (affectedRows > 0) {
                 rs = pstmt.getGeneratedKeys();
                 if (rs.next()) {
                     int receiptId = rs.getInt(1);
-                    
+
                     String itemSql = "INSERT INTO order_items (receipt_id, product_id, product_name, quantity, price, total) VALUES (?, ?, ?, ?, ?, ?)";
                     PreparedStatement itemStmt = conn.prepareStatement(itemSql);
-                    
+
                     for (OrderItem item : currentOrder) {
                         itemStmt.setInt(1, receiptId);
                         itemStmt.setString(2, item.getProduct().getProductId());
@@ -472,7 +507,7 @@ public class MenuController implements Initializable {
                         itemStmt.setDouble(5, item.getProduct().getPrice());
                         itemStmt.setDouble(6, item.getTotal());
                         itemStmt.executeUpdate();
-                        
+
                         String updateStock = "UPDATE product SET stock = stock - ? WHERE product_id = ?";
                         PreparedStatement stockStmt = conn.prepareStatement(updateStock);
                         stockStmt.setInt(1, item.getQuantity());
@@ -480,18 +515,20 @@ public class MenuController implements Initializable {
                         stockStmt.executeUpdate();
                         stockStmt.close();
                     }
-                    
+
                     itemStmt.close();
                 }
             }
-            
+
             conn.commit();
             showAlert(Alert.AlertType.INFORMATION, "Success", "Order placed successfully!");
             return true;
 
         } catch (Exception e) {
             try {
-                if (conn != null) conn.rollback();
+                if (conn != null) {
+                    conn.rollback();
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -500,8 +537,12 @@ public class MenuController implements Initializable {
             return false;
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (pstmt != null) pstmt.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
                 if (conn != null) {
                     conn.setAutoCommit(true);
                     conn.close();
@@ -513,49 +554,66 @@ public class MenuController implements Initializable {
     }
 
     private void generateReceipt(String customerName) {
+        String cafeName = "M A R I A M 'S   C A F E";
+
+        String boldLine = "=====================================";
+
         StringBuilder receipt = new StringBuilder();
-        receipt.append("═══════════════════════════════════\n");
-        receipt.append("         CAFE RECEIPT\n");
-        receipt.append("═══════════════════════════════════\n\n");
-        receipt.append("Customer: ").append(customerName).append("\n");
-        receipt.append("Order Type: ").append(selectedOrderType).append("\n");
-        receipt.append("Payment: ").append(selectedPaymentMethod).append("\n");
-        receipt.append("Cashier: ").append(session.getUsername()).append("\n\n");
-        receipt.append("───────────────────────────────────\n");
-        receipt.append("ITEMS:\n");
-        receipt.append("───────────────────────────────────\n\n");
+
+        receipt.append("  " + cafeName + "\n");
+
+        String line = "-------------------------------------";
+        receipt.append(boldLine + "\n\n");
+
+        receipt.append(String.format("Customer     : %s\n", customerName));
+        receipt.append(String.format("Order Type   : %s\n", selectedOrderType));
+        receipt.append(String.format("Payment      : %s\n", selectedPaymentMethod));
+        receipt.append(String.format("Cashier      : %s\n", session.getUsername()));
+        receipt.append("\n" + line + "\n");
+        receipt.append("ITEM               QTY   TOTAL\n");
+        receipt.append(line + "\n");
 
         for (OrderItem item : currentOrder) {
-            receipt.append(String.format("%-20s %2d × %6.2f = %7.2f\n",
+            receipt.append(String.format(
+                    "%-15s  %3d   %7.2f\n",
                     item.getProduct().getProductName(),
                     item.getQuantity(),
-                    item.getProduct().getPrice(),
-                    item.getTotal()));
+                    item.getTotal()
+            ));
         }
 
         double subTotal = currentOrder.stream().mapToDouble(OrderItem::getTotal).sum();
         double tax = subTotal * 0.05;
         double total = subTotal + tax;
 
-        receipt.append("\n───────────────────────────────────\n");
-        receipt.append(String.format("Sub Total:              %10.2f EGP\n", subTotal));
-        receipt.append(String.format("Tax (5%%):              %10.2f EGP\n", tax));
-        receipt.append("═══════════════════════════════════\n");
-        receipt.append(String.format("TOTAL:                  %10.2f EGP\n", total));
-        receipt.append("═══════════════════════════════════\n\n");
-        receipt.append("     Thank you for your visit!\n");
-        receipt.append("═══════════════════════════════════\n");
+        receipt.append("\n" + line + "\n");
+        receipt.append(String.format("Sub Total          %10.2f\n", subTotal));
+        receipt.append(String.format("Tax (5%%)           %10.2f\n", tax));
+        receipt.append(boldLine + "\n");
+        receipt.append(String.format("TOTAL              %10.2f\n", total));
+        receipt.append(boldLine + "\n\n");
+
+        receipt.append("     THANK YOU FOR YOUR ORDER\n");
+        receipt.append("        HAVE A GREAT DAY!\n");
+        receipt.append(boldLine);
 
         Alert receiptAlert = new Alert(Alert.AlertType.INFORMATION);
         receiptAlert.setTitle("Order Receipt");
         receiptAlert.setHeaderText("Order Completed Successfully!");
-        
+
         TextArea textArea = new TextArea(receipt.toString());
         textArea.setEditable(false);
         textArea.setWrapText(true);
-        textArea.setStyle("-fx-font-family: 'Courier New'; -fx-font-size: 12px;");
-        textArea.setPrefRowCount(20);
-        
+
+        textArea.setStyle(
+                "-fx-font-family: 'Consolas';"
+                + "-fx-font-size: 11px;"
+                + "-fx-control-inner-background: white;"
+                + "-fx-text-fill: black;"
+        );
+
+        textArea.setPrefRowCount(18);
+
         receiptAlert.getDialogPane().setContent(textArea);
         receiptAlert.showAndWait();
     }
@@ -572,13 +630,24 @@ public class MenuController implements Initializable {
         try {
             session.clearSession();
             Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-            Stage stage = (Stage) mainContainer.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Cafe Management System - Login");
-            stage.show();
+
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Cafe Management System - Login");
+            loginStage.setScene(new Scene(root, 1100, 650)); // ✅ الحجم الموحد
+
+            loginStage.setResizable(false);
+            loginStage.setMinWidth(1100);
+            loginStage.setMinHeight(650);
+            loginStage.setMaxWidth(1100);
+            loginStage.setMaxHeight(650);
+
+            loginStage.show();
+
+            Stage currentStage = (Stage) mainContainer.getScene().getWindow();
+            currentStage.close();
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to logout");
+            System.exit(0);
         }
     }
 
@@ -592,15 +661,22 @@ public class MenuController implements Initializable {
 
     private void closeResources() {
         try {
-            if (result != null) result.close();
-            if (prepare != null) prepare.close();
-            if (connect != null) connect.close();
+            if (result != null) {
+                result.close();
+            }
+            if (prepare != null) {
+                prepare.close();
+            }
+            if (connect != null) {
+                connect.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static class OrderItem {
+
         private productData product;
         private int quantity;
 
@@ -609,9 +685,20 @@ public class MenuController implements Initializable {
             this.quantity = quantity;
         }
 
-        public productData getProduct() { return product; }
-        public int getQuantity() { return quantity; }
-        public void setQuantity(int quantity) { this.quantity = quantity; }
-        public double getTotal() { return product.getPrice() * quantity; }
+        public productData getProduct() {
+            return product;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
+        }
+
+        public double getTotal() {
+            return product.getPrice() * quantity;
+        }
     }
 }
