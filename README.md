@@ -126,13 +126,13 @@ mysql -u root -p cafe_management < database/schema.sql
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="https://via.placeholder.com/150/032A33/FFFFFF?text=MI" style="border-radius:50%" width="150"/><br><br>
+      <br>
       <b>Mariam Ibrahim</b><br>
       <sub>Co-Lead Developer</sub><br><br>
       💻 Frontend & Backend Development
     </td>
     <td align="center" width="50%">
-      <img src="https://via.placeholder.com/150/2A777C/FFFFFF?text=ME" style="border-radius:50%" width="150"/><br><br>
+      <br>
       <b>Mariam Eid</b><br>
       <sub>Co-Lead Developer</sub><br><br>
       💻 Frontend & Backend Development
@@ -166,12 +166,6 @@ cafe-management-system/
 ├── pom.xml                    # Maven configuration
 └── README.md                  # This file
 ```
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - feel free to use it for learning and development.
 
 ---
 
