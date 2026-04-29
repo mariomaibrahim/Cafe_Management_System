@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" stylesheets="@menuScreenDesign.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aitpcafe.MenuController">
+   <children>
+      <AnchorPane fx:id="mainContainer" prefHeight="650.0" prefWidth="1100.0" styleClass="root">
+         <children>
+            <AnchorPane fx:id="menu_form" layoutX="220.0" prefHeight="650.0" prefWidth="880.0" styleClass="white-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ScrollPane fitToWidth="true" styleClass="scroll-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <VBox prefHeight="646.0" prefWidth="908.0" spacing="14">
+                        <padding>
+                           <Insets bottom="18" left="18" right="18" top="18" />
+                        </padding>
+                        <children>
+                           
+                           <HBox spacing="14">
+                              <VBox prefHeight="610.0" prefWidth="288.0" spacing="12" HBox.hgrow="ALWAYS">
+                                 <VBox prefHeight="610.0" prefWidth="553.0" spacing="12" styleClass="container-card">
+                                    
+                                    <!-- ✅ Search Bar -->
+                                    <HBox alignment="CENTER_LEFT" spacing="8" styleClass="search-container">
+                                       <padding>
+                                          <Insets bottom="10" left="12" right="12" top="10" />
+                                       </padding>
+                                       <children>
+                                          <AnchorPane prefHeight="40.0" prefWidth="18.0">
+                                             <children>
+                                                <FontIcon iconColor="#757575" iconLiteral="fas-search" iconSize="18" layoutX="7.0" layoutY="26.0" />
+                                             </children>
+                                          </AnchorPane>
+                                          <TextField fx:id="searchField" prefHeight="32.0" promptText="Search products..." styleClass="search-field" HBox.hgrow="ALWAYS">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    
+                                    <ScrollPane fx:id="menu_scrollpane" fitToWidth="true" prefHeight="520.0" prefWidth="489.0" styleClass="products-scroll">
+                                       <GridPane fx:id="menu_gridpane" />
+                                    </ScrollPane>
+                                 </VBox>
+                              </VBox>
+                              <VBox prefHeight="610.0" prefWidth="225.0" spacing="12" styleClass="container-card">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="89.0" spacing="8">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="22.0" prefWidth="262.0" styleClass="section-title" stylesheets="@../../../../../../../Desktop/Cafe_Management_System-main%20(1)/Cafe_Management_System-main/src/main/resources/aitpcafe/menuScreenDesign.css" text="Order Place" textAlignment="CENTER">
+                                             <font>
+                                                <Font name="Arial Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <Line endX="267.25" stroke="#e2e8f0" strokeWidth="1.5" />
+                                    <VBox prefHeight="91.0" prefWidth="272.0" spacing="8">
+                                       <children>
+                                          <Label style="-fx-font-weight: bold;" stylesheets="@../../../../../../../Desktop/Cafe_Management_System-main%20(1)/Cafe_Management_System-main/src/main/resources/aitpcafe/inventoryScreenDesign.css" text="Order Type">
+                                             <font>
+                                                <Font name="Arial Bold" size="12.0" />
+                                             </font>
+                                             <styleClass>
+                                                <String fx:value="sub-label" />
+                                                <String fx:value="text" />
+                                             </styleClass>
+                                          </Label>
+                                          <HBox alignment="CENTER" spacing="6">
+                                             <children>
+                                                <Button fx:id="dineInBtn" onAction="#setOrderType" prefHeight="39.0" prefWidth="91.0" style="-fx-text-fill: #615a5a; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-color: #fff; -fx-border-color: #f0f0f0;" styleClass="order-type-btn" stylesheets="@../../../../../../../Desktop/Cafe_Management_System-main%20(1)/Cafe_Management_System-main/src/main/resources/aitpcafe/inventoryScreenDesign.css" text="Dine In" />
+                                                <Button fx:id="takeAwayBtn" onAction="#setOrderType" prefHeight="39.0" prefWidth="91.0" style="-fx-text-fill: #615a5a; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-color: #fff; -fx-border-color: #f0f0f0;" styleClass="order-type-btn" stylesheets="@../../../../../../../Desktop/Cafe_Management_System-main%20(1)/Cafe_Management_System-main/src/main/resources/aitpcafe/inventoryScreenDesign.css" text="Take Away" />
+                                                <Button fx:id="deliveryBtn" onAction="#setOrderType" prefHeight="39.0" prefWidth="87.0" style="-fx-text-fill: #615a5a; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-color: #fff; -fx-border-color: #f0f0f0;" styleClass="order-type-btn" stylesheets="@../../../../../../../Desktop/Cafe_Management_System-main%20(1)/Cafe_Management_System-main/src/main/resources/aitpcafe/inventoryScreenDesign.css" text="Delivery" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="156.0" prefWidth="272.0" spacing="8">
+                                       <children>
+                                          <Label styleClass="text" stylesheets="@../../../../../../../Desktop/Cafe_Management_System-main%20(1)/Cafe_Management_System-main/src/main/resources/aitpcafe/inventoryScreenDesign.css" text="Items">
+                                             <font>
+                                                <Font name="Arial Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <ScrollPane fitToWidth="true" prefHeight="105.0" prefWidth="272.0" styleClass="items-scroll">
+                                             <content>
+                                                <VBox fx:id="orderItemsContainer" prefHeight="106.0" prefWidth="268.0" spacing="6" styleClass="order-items-container">
+                                                   <children>
+                                                      <Label alignment="CENTER" styleClass="empty-label" text="No items yet" />
+                                                   </children>
+                                                </VBox>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </VBox>
+                                    <VBox layoutX="31.0" layoutY="155.0" prefHeight="151.0" prefWidth="272.0" spacing="8" style="-fx-background-color: #f8f8f8; -fx-border-radius: 100px;" stylesheets="@../../../../../Cafe_Management_System-main%20(1)/Cafe_Management_System-main/src/main/resources/aitpcafe/inventoryScreenDesign.css">
+                                       <children>
+                                          <AnchorPane prefHeight="125.0" prefWidth="264.0" style="-fx-border-radius: #e4e4e4;">
+                                             <children>
+                                                <Label layoutX="22.0" layoutY="63.0" prefHeight="19.0" prefWidth="246.0" style="-fx-text-fill: #e0e0e0;" text="-------------------------------------------------" />
+                                                <Label layoutX="15.0" layoutY="14.0" style="-fx-text-fill: #615a5a; -fx-font-weight: bold;" styleClass="text" text="Sub Total:" />
+                                                <Label fx:id="subTotalLabel" layoutX="196.0" layoutY="14.0" style="-fx-text-fill: #615a5a; -fx-font-weight: bold;" styleClass="text" text="\$0.0 " />
+                                                <Label layoutX="15.0" layoutY="41.0" style="-fx-text-fill: #615a5a; -fx-font-weight: bold;" styleClass="text" text="Tax (5%):" />
+                                                <Label fx:id="taxLabel" layoutX="196.0" layoutY="41.0" style="-fx-text-fill: #615a5a; -fx-font-weight: bold;" styleClass="text" text="\$0.0 " />
+                                                <Label fx:id="totalLabel" layoutX="196.0" layoutY="84.0" style="-fx-text-fill: #615a5a; -fx-font-weight: bold;" styleClass="total-value" text="\$0.0" />
+                                                <Label layoutX="15.0" layoutY="84.0" style="-fx-text-fill: #615a5a; -fx-font-weight: bold;" styleClass="total-label" text="Total Amount " />
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </VBox>
+                                    <AnchorPane prefHeight="138.0" prefWidth="272.0">
+                                       <children>
+                                          <Button fx:id="placeOrderBtn" layoutX="1.0" layoutY="125.0" maxWidth="Infinity" onAction="#placeOrder" prefHeight="41.0" prefWidth="271.0" styleClass="place-order-btn" stylesheets="@../../../../../Cafe_Management_System-main%20(1)/Cafe_Management_System-main/src/main/resources/aitpcafe/inventoryScreenDesign.css" text="Place Order" textFill="#f8f8f8" />
+                                          <Button fx:id="cashBtn" layoutX="2.0" layoutY="38.0" onAction="#setPaymentMethod" prefHeight="45.0" prefWidth="75.0" style="-fx-border-color: #f0f0f0;" styleClass="payment-btn">
+                                              <graphic>
+                                                <FontIcon iconLiteral="fas-money-bill" iconSize="16" text="" />
+                                             </graphic>
+                                          </Button>
+                                          <Button fx:id="cardBtn" layoutX="99.0" layoutY="38.0" onAction="#setPaymentMethod" prefHeight="45" prefWidth="75" style="-fx-border-color: #f0f0f0;" styleClass="payment-btn">
+                                             <graphic>
+                                                <FontIcon iconLiteral="far-credit-card" iconSize="18" selectionFill="#3498db" />
+                                             </graphic>
+                                          </Button>
+                                          <Button fx:id="digitalBtn" layoutX="197.0" layoutY="38.0" onAction="#setPaymentMethod" prefHeight="45" prefWidth="75" style="-fx-border-color: #f0f0f0;" styleClass="payment-btn">
+                                             <graphic>
+                                                <FontIcon iconLiteral="fab-paypal" iconSize="18">
+                                                   <iconColor>
+                                                      <LinearGradient endX="1.0" endY="1.0" startX="0.10606060425440471" startY="0.6136363564115582">
+                                                         <stops>
+                                                            <Stop>
+                                                               <color>
+                                                                  <Color />
+                                                               </color>
+                                                            </Stop>
+                                                            <Stop offset="1.0">
+                                                               <color>
+                                                                  <Color red="1.0" green="1.0" blue="1.0" />
+                                                               </color>
+                                                            </Stop>
+                                                         </stops>
+                                                      </LinearGradient>
+                                                   </iconColor>
+                                                </FontIcon>
+                                             </graphic>
+                                          </Button>
+                                          <Label layoutX="6.0" layoutY="12.0" prefHeight="11.0" prefWidth="97.0" styleClass="text" stylesheets="@../../../../../../Cafe_Management_System-main%20(1)/Cafe_Management_System-main/src/main/resources/aitpcafe/inventoryScreenDesign.css" text="Payment Method">
+                                             <font>
+                                                <Font name="Arial Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="27.0" layoutY="90.0" prefHeight="16.0" prefWidth="43.0" style="-fx-font-weight: bold; -fx-text-fill: #615a5a;" styleClass="text" stylesheets="@../../../../../../../Desktop/Cafe_Management_System-main%20(1)/Cafe_Management_System-main/src/main/resources/aitpcafe/inventoryScreenDesign.css" text="Cash" />
+                                          <Label layoutX="121.0" layoutY="90.0" prefHeight="16.0" prefWidth="32.0" style="-fx-font-weight: bold; -fx-text-fill: #615a5a;" styleClass="text" stylesheets="@../../../../../../../Desktop/Cafe_Management_System-main%20(1)/Cafe_Management_System-main/src/main/resources/aitpcafe/inventoryScreenDesign.css" text="Card" />
+                                          <Label layoutX="217.0" layoutY="90.0" prefHeight="16.0" prefWidth="41.0" style="-fx-font-weight: bold; -fx-text-fill: #615a5a;" styleClass="text" stylesheets="@../../../../../../../Desktop/Cafe_Management_System-main%20(1)/Cafe_Management_System-main/src/main/resources/aitpcafe/inventoryScreenDesign.css" text="Digital" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </VBox>
+                           </HBox>
+                        </children>
+                     </VBox>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
